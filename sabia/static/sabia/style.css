@@ -1,0 +1,23 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+	padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#container-form-login {
+	margin: 0 auto;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+	padding-top: 10px;
+	padding-bottom: 15px;
+	background-color: #FFF;
+}
+
+#background-cadastro {
+	background: #EEE;
+}
+
+#radio-box-cadastro {
+	margin-bottom: 15px;
+}

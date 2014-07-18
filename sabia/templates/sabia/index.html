@@ -1,0 +1,66 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sabiá - Remake</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="{% static 'sabia/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sabia/font-awesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sabia/style.css' %}" />
+
+  </head>
+  <body>	
+  	
+  	{% include "sabia/menu-login.html" %}
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Sabiá, The Remake!</h1>
+        <p>Esse é um projeto de mestrado em Informática dos alunos da UFES. Mas o que é Sabiá? É uma ferramenta de apoio a construção de fichamentos!</p>
+        <p><a class="btn btn-primary btn-lg" href="{% url 'sabia:cadastro' %}" role="button">Não possui cadastro? Clique aqui! &raquo;</a></p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2><i class="fa fa-university"></i>&nbspUFES</h2>
+          <p>O projeto Sabiá é uma ferramenta de apoio a fichamento desenvolvida pelos alunos de informática da Universidade Federal do Espírito Santo. Para saber mais sobre a universidade, basta clicar no botão abaixo </p>
+          <p><a class="btn btn-default" href="http://www.ufes.br/"  target="_blank" role="button">Veja mais &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <h2><i class="fa fa-file-code-o"></i>&nbspDjango</h2>
+          <p>O Django é um framework web de alto nível escrito em Python que estimula o desenvolvimento rápido e limpo. Desenvolvido e utilizado por mais de dois anos em uma operação ágil de notícias online, Django foi projetado para lidar com dois desafios: os prazos apertados de uma redação e os requisitos rígidos dos experientes desenvolvedores web que o criaram. Ele permite que você construa rapidamente aplicações web de alto desempenho e elegância.</p>
+          <p><a class="btn btn-default" href="https://www.djangoproject.com/" target="_blank" role="button">Veja mais &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <h2><i class="fa fa-graduation-cap"></i>&nbspLIED</h2>
+          <p>Os alunos envolvidos no desenvolvimento do Sabiá são do LIED, Laboratório de Informática na Educação. Equipe composta por 3 integrantes: Guilherme Marques, Guilherme Pinotte e Thiago Tuler</p>
+          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; Mestrado em Informática - LIED 2014</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <script src="{% static 'sabia/bootstrap/js/bootstrap.min.js' %}"></script>	  	
+  </body>
+</html>  
+
+
+
+
+

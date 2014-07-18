@@ -1,0 +1,71 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sabiá - Remake</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="{% static 'sabia/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sabia/font-awesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sabia/style.css' %}" />
+    
+  </head>
+  <body id="background-cadastro">    
+    
+    {% include "sabia/menu-login.html" %}
+
+    <div class="container">
+      <div class="row">
+        <h2>Cadastro</h2>
+        <div class="col-md-12" id="container-form-login">
+          <form role="form" action="{% url 'sabia:cadastrarUsuario' %}" method="POST">
+            {% csrf_token %} 
+            <div class="form-group">
+              <label for="inputName">Nome</label>
+              <input type="text" class="form-control" id="inputName" name="nome" placeholder="João da Silva">
+            </div>
+            <div class="form-group">
+              <label for="inputEmail">Email</label>
+              <input type="email" class="form-control" id="inputEmail" name="email" placeholder="ex: joaodasilva@mail.com">
+            </div>
+            <div class="form-group">
+              <label for="inputSenha">Senha</label>
+              <input type="password" class="form-control" id="inputSenha" name="senha" placeholder="Senha">
+            </div>
+            <div class="form-group">
+              <label for="inputConfirmacaoSenha">Confirmação da Senha</label>
+              <input type="password" class="form-control" id="inputConfirmacaoSenha" name="confirmacaoSenha" placeholder="Confirme a Senha">
+            </div>
+
+            <div id="radio-box-cadastro">
+              <label class="radio-inline">
+                <input type="radio" name="tipo" id="radioAluno" value="aluno"> Aluno
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="tipo" id="radioProfessor" value="professor"> Professor
+              </label>
+            </div>  
+            <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
+            <a class="btn btn-default btn-lg" href="{% url 'sabia:index' %}" role="button">Voltar</a>
+          </form>
+        </div>    
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; Mestrado em Informática - LIED 2014</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <script src="{% static 'sabia/bootstrap/js/bootstrap.min.js' %}"></script>      
+  </body>  
