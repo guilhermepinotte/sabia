@@ -21,34 +21,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'sabia/style.css' %}" />
 
   </head>
-  <body id="background-cadastro">	
-  	
-  	{% include "sabia/menu-login.html" %}
+  <body id="background-cadastro">
+  	<!-- MENU -->
+    {% include "sabia/menu.html" %}
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-12" role="main">
-          {% if sucess_message %}
-          <!-- <div class="alert alert-success" role="alert">...</div> -->
-          <div class="bs-callout bs-callout-info">
-            <h4><i class="fa fa-check"></i> Parabéns!</h4>
-            <p>Agora você possui um cadastro no Sabiá. Aguarde a ativação de sua conta para poder acessar todas as funcionalidades do Sabiá</p>
-            <a href="{% url 'sabia:index' %}" class="btn btn-primary active" role="button">Voltar à página inicial</a> 
-          </div>
-        {% endif %}
-        {% if error_message %}
-          <div class="bs-callout bs-callout-danger">
-            <h4><i class="fa fa-warning"></i> Erro</h4>
-            <p>Ocorreu algum erro durante seu cadastro. Por favor, tente novamente.</p>
-            <a class="btn btn-primary" href="{% url 'sabia:cadastro' %}" role="button">Voltar</a> 
-          </div>
-        {% endif %}
-        </div>  
-      </div>
-      <hr>
-      <footer>
-        <p>&copy; Mestrado em Informática - LIED 2014</p>
-      </footer>
+      <!-- CONTEÚDO -->
+      <!-- AQUI VAI ENTRAR O CONTEÚDO DA PÁGINA -->
+     
     </div> <!-- /container -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

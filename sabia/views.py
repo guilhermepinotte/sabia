@@ -28,6 +28,5 @@ def CadastrarUsuario(request):
 			return render(request,'sabia/cadastro-msg.html',
 				{'sucess_message': "Usuário cadastrado com sucesso"})
 				
-			# raise
-			# context = 'error'
-			# return render(request,'sabia/cadastro-msg.html',context)	
+def EfetuarLogin(request):
+	return render(request,'sabia/home.html')
