@@ -1,0 +1,56 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sabiá - Remake</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="{% static 'sabia/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sabia/bootstrap/css/docs.min.css' %}">
+    <link rel="stylesheet" href="{% static 'sabia/font-awesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sabia/style.css' %}" />
+
+  </head>
+  <body id="background-cadastro">	
+  	
+  	{% include "sabia/menu-login.html" %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" role="main">
+          {% if sucess_message %}
+          <!-- <div class="alert alert-success" role="alert">...</div> -->
+          <div class="bs-callout bs-callout-info">
+            <h4><i class="fa fa-check"></i> Parabéns!</h4>
+            <p>Agora você possui um cadastro no Sabiá. Aguarde a ativação de sua conta para poder acessar todas as funcionalidades do Sabiá</p>
+            <a href="{% url 'sabia:index' %}" class="btn btn-primary active" role="button">Voltar à página inicial</a> 
+          </div>
+        {% endif %}
+        {% if error_message %}
+          <div class="bs-callout bs-callout-danger">
+            <h4><i class="fa fa-warning"></i> Erro</h4>
+            <p>Ocorreu algum erro durante seu cadastro. Por favor, tente novamente.</p>
+            <a class="btn btn-primary" href="{% url 'sabia:cadastro' %}" role="button">Voltar</a> 
+          </div>
+        {% endif %}
+        </div>  
+      </div>
+      <hr>
+      <footer>
+        <p>&copy; Mestrado em Informática - LIED 2014</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <script src="{% static 'sabia/bootstrap/js/bootstrap.min.js' %}"></script>      
+  </body>
+</html>
