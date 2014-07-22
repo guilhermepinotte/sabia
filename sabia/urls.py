@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^cadastro/$', views.CadastroView, name='cadastro'),
     url(r'^cadastro/novo$', views.CadastrarUsuario, name='cadastrarUsuario'),
     url(r'^home/$', views.EfetuarLogin, name='login'),
+    url(r'^sair/$', views.user_logout, name='logout'),
     #url(r'^(?P<pk>\d+)/results/$', views.ResultsView.as_view(), name='results'),
     #url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
 )
