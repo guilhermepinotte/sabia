@@ -29,4 +29,5 @@ def CadastrarUsuario(request):
 				{'sucess_message': "Usuário cadastrado com sucesso"})
 				
 def EfetuarLogin(request):
-	return render(request,'sabia/home.html')
+	return render(request,'sabia/home.html', 
+		{'classHome': "active"})
