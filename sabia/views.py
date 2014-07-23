@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.utils import timezone
+from django.http import HttpResponseRedirect, HttpResponse
 
 from sabia.models import *
 from django.contrib.auth import authenticate, login, logout
@@ -15,7 +16,9 @@ def IndexView(request):
 		if user :
 			if user.is_active :
 				login(request,user)
-				return render(request,'sabia/home.html',{})
+				return HttpResponseRedirect('home')
+				# return render(request,'sabia/home.html',
+				# 	{'classHome': "active"})
 		else:
 			return render(request,'sabia/index.html',{'error_message':'Usuario nao ativo'})
 	else:		
@@ -54,9 +57,9 @@ def CadastrarUsuario(request):
 			userprofile.save()
 			registrado = True
 			return render(request,'sabia/cadastro-msg.html',
-				{'sucess_message': "UsuÃ¡rio cadastrado com sucesso"})
+				{'sucess_message': "Usuário cadastrado com sucesso"})
 			
 				
-def EfetuarLogin(request):
+def Home(request):
 	return render(request,'sabia/home.html', 
 		{'classHome': "active"})

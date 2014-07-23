@@ -13,7 +13,7 @@
       {% if user.is_authenticated %}     
          <div style="float:right; color:white; margin: 10px 0 0 0 " >
           Ola {{ user.username }}
-          <a href="sair" style="margin: 0 0 0 10px">
+          <a href="{% url 'sabia:logout' %}" style="margin: 0 0 0 10px">
           Sair
           </a>
          <div>
