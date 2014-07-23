@@ -17,7 +17,7 @@ def IndexView(request):
 			if user.is_active :
 				login(request,user)
 				return HttpResponseRedirect('home')
-				# return render(request,'sabia/home.html',
+				# return render(request,'sabia/painel.html',
 				# 	{'classHome': "active"})
 		else:
 			return render(request,'sabia/index.html',{'error_message':'Usuario nao ativo'})
@@ -58,8 +58,29 @@ def CadastrarUsuario(request):
 			registrado = True
 			return render(request,'sabia/cadastro-msg.html',
 				{'sucess_message': "Usuário cadastrado com sucesso"})
-			
-				
+					
 def Home(request):
-	return render(request,'sabia/home.html', 
-		{'classHome': "active"})
+	conteudo = 'sabia/home/home.html'
+	return render(request,'sabia/painel.html', 
+		{'activeHome': "active",
+		'conteudo': conteudo})
+
+def Fichamentos(request):
+	conteudo = 'sabia/fichamento/lista_fichamentos.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo})
+
+def Avaliacoes(request):
+	conteudo = 'sabia/avaliacao/lista_avaliacao.html'
+	return render(request,'sabia/painel.html', 
+		{'activeAvaliacoes': "active",
+		'conteudo': conteudo})	
+
+def Artigos(request):
+	conteudo = 'sabia/artigo/lista_artigos.html'
+	artigos = Artigo.objects.filter(idUsuario=request.user.id)
+	return render(request,'sabia/painel.html',
+				{'activeArtigos': "active",
+				'artigos': artigos,
+				'conteudo': conteudo})
