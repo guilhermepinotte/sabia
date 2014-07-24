@@ -10,9 +10,7 @@ def IndexView(request):
 	if request.method == 'POST':
 		username = request.POST['username']
 		password = request.POST['password']
-		
 		user = authenticate(username=username, password=password)
-		
 		if user :
 			if user.is_active :
 				login(request,user)
@@ -65,11 +63,82 @@ def Home(request):
 		{'activeHome': "active",
 		'conteudo': conteudo})
 
+#
+#  F I C H A M E N T O
+#
 def Fichamentos(request):
 	conteudo = 'sabia/fichamento/lista_fichamentos.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
 		'conteudo': conteudo})
+	
+def novoFichamento(request):
+	conteudo = 'sabia/fichamento/novo_fichamento.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo})
+	
+def verFichamento(request,get_id):	
+	conteudo = 'sabia/fichamento/ver_fichamento.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo,
+		'get_id':get_id})	
+	
+def editaFichamento(request,get_id):	
+	conteudo = 'sabia/fichamento/edita_fichamento.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo,
+		'get_id':get_id})
+	
+#### MODELOS
+def Modelos(request):
+	conteudo = 'sabia/fichamento/lista_modelo.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo})
+	
+def novoModelo(request):
+	conteudo = 'sabia/fichamento/novo_modelo.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo})
+	
+def editaModelo(request,get_id):
+	conteudo = 'sabia/fichamento/edita_modelo.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo,
+		'get_id':get_id})	
+	
+def verModelo(request,get_id):
+	conteudo = 'sabia/fichamento/ver_modelo.html'
+	return render(request,'sabia/painel.html', 
+		{'activeFichamentos': "active",
+		'conteudo': conteudo,
+		'get_id':get_id})	
+	
+#
+#  A R T I G O S
+#
+def Artigos(request):
+	conteudo = 'sabia/artigo/lista_artigos.html'
+	artigos = Artigo.objects.filter(idUsuario=request.user.id)
+	return render(request,'sabia/painel.html',
+				{'activeArtigos': "active",
+				'artigos': artigos,
+				'conteudo': conteudo})	
+
+def novoArtigo(request):
+	conteudo = 'sabia/artigo/novo_artigo.html'	
+	return render(request,'sabia/painel.html',
+				{'activeArtigos': "active",
+				'conteudo': conteudo})
+			
+#
+#  A V A L I A C A O
+#
 
 def Avaliacoes(request):
 	conteudo = 'sabia/avaliacao/lista_avaliacao.html'
@@ -77,10 +146,3 @@ def Avaliacoes(request):
 		{'activeAvaliacoes': "active",
 		'conteudo': conteudo})	
 
-def Artigos(request):
-	conteudo = 'sabia/artigo/lista_artigos.html'
-	artigos = Artigo.objects.filter(idUsuario=request.user.id)
-	return render(request,'sabia/painel.html',
-				{'activeArtigos': "active",
-				'artigos': artigos,
-				'conteudo': conteudo})
