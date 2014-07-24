@@ -15,7 +15,7 @@ class UserProfile(models.Model):
         return self.user.nome
     
 class Artigo(models.Model):
-    idUsuario = models.ForeignKey(UserProfile)
+    idUsuario = models.OneToOneField(User)
     titulo = models.CharField(max_length=255)
     autor = models.CharField(max_length=255)
     descricao = models.TextField()
@@ -25,14 +25,14 @@ class Artigo(models.Model):
         return self.titulo
     
 class Fichamento(models.Model):
-    idUsuario = models.ForeignKey(UserProfile)
-    idArtigo = models.ForeignKey(Artigo)
+    idUsuario = models.OneToOneField(User)
+    idArtigo = models.OneToOneField(Artigo)
     dataCadastro = models.DateTimeField('data de cadastro')
     dataAlteracao = models.DateTimeField('data de alteracao')
 
 class Avaliacao(models.Model):
-    idFichamento = models.ForeignKey(Fichamento)
-    idUsuario = models.ForeignKey(UserProfile)
+    idFichamento = models.OneToOneField(Fichamento)
+    idUsuario = models.OneToOneField(User)
     consideracao = models.TextField()
     nota = models.FloatField()
     dataAvaliacao = models.DateTimeField('data de avaliacao do artigo')
@@ -43,7 +43,7 @@ class Avaliacao(models.Model):
         return self.nota
     
 class Modelo(models.Model):
-    idUsuario = models.ForeignKey(UserProfile)
+    idUsuario = models.OneToOneField(User)
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
     dataCadastro = models.DateTimeField('data de cadastro')
@@ -52,15 +52,15 @@ class Modelo(models.Model):
         return self.nome
     
 class Campo(models.Model):
-    idModelo = models.ForeignKey(UserProfile)
+    idModelo = models.OneToOneField(Modelo)
     label = models.CharField(max_length=255)
     
     def __str__(self):
         return self.label 
     
 class Resposta(models.Model):
-    idCampo = models.ForeignKey(Campo)
-    idFichamento = models.ForeignKey(Fichamento)
+    idCampo = models.OneToOneField(Campo)
+    idFichamento = models.OneToOneField(Fichamento)
     resposta = models.TextField()
     
     def __str__(self):
