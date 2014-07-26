@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^fichamentos/(?P<get_id>\d+)/ver', views.verFichamento, name='verfichamento'),
     url(r'^fichamentos/(?P<get_id>\d+)/edita$', views.editaFichamento, name='editafichamento'),
     
-    url(r'^fichamentos/modelo/lista$', views.Modelos, name='modelo'),
+    url(r'^fichamentos/modelo/$', views.Modelos, name='modelo'),    
     url(r'^fichamentos/modelo/novo$', views.novoModelo, name='novomodelo'),
     url(r'^fichamentos/modelo/(?P<get_id>\d+)/ver$', views.verModelo, name='vermodelo'),
     url(r'^fichamentos/modelo/(?P<get_id>\d+)/edita$', views.editaModelo, name='editamodelo'),    

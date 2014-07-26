@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_CHARSET = 'utf-8'
 
 # Application definition
 
@@ -75,6 +76,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOGIN_URL = '/sabia/'
 
 
 # Static files (CSS, JavaScript, Images)
