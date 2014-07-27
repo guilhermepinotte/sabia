@@ -29,4 +29,9 @@ $(document).ready( function () {
 		     { "bSortable": false } // coluna não ordenável
 	    ]  	
     });
-} );
+
+	$('[data-toggle="tooltip"]').tooltip({
+    	delay: { show: 500, hide: 100 }
+    });
+
+});

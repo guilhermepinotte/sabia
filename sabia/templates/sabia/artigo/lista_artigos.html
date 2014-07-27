@@ -2,7 +2,7 @@
 	<h1>Artigos</h1>
 
   <div class="row" id="btn-inserir-artigo"> 
-    <a class="btn btn-primary pull-right" href="{% url 'sabia:cadastro' %}" role="button">Inserir novo artigo</a>
+    <a class="btn btn-success pull-right" href="{% url 'sabia:novoartigo' %}" role="button"><i class="fa fa-plus"></i>&nbsp Inserir novo artigo</a>
   </div>
   <div class="row">  
   	<table class="table table-hover table-bordered" id="table-artigos">
@@ -10,7 +10,7 @@
   		  <tr>
   		  	<th>Título</th>
   		  	<th>Autor</th>
-          <th>Gerenciar</th>
+          <th style="width: 75px;">Gerenciar</th>
   		  </tr>
   		</thead>  
       {% for artigo in artigos %}
@@ -19,10 +19,9 @@
       	  	<td>{{artigo.titulo}}</td>
       	  	<td>{{artigo.autor}}</td>
             <td>
-              <button type="button" class="btn btn-default btn-xs">Ver</button>
-              <button type="button" class="btn btn-default btn-xs">Alterar</button>
-              <button type="button" class="btn btn-default btn-xs">Baixar</button>
-              <button type="button" class="btn btn-default btn-xs">Excluir</button>
+              <button type="button" class="btn btn-default btn-xs"data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></button>
+              <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></button>
+              <button type="button" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></button>
             </td>
       	  </tr>
         </tbody>  

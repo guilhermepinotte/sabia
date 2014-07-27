@@ -1,0 +1,56 @@
+<h1>Criar novo modelo</h1>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form role="form">
+			<div class="form-group input-group-lg">
+		    	<label for="exampleInputEmail1">Nome:</label>
+	    		<input type="email" class="form-control " id="exampleInputEmail1" placeholder="Nome do Modelo">
+	  		</div>
+ 			<div class="panel panel-default">
+				<div class="panel-heading">
+					<b>Campos:</b>
+				</div>
+				<div class="panel-body">
+					<div class="boxcampos">					
+						<div class="row bs-callout" style="padding: 10px 0 0 0; margin: 0 0 15px 0" id="boxcampo">
+							<div class="col-sm-5">
+								<div class="form-group" >
+							    	<label for="exampleInputEmail1">Campo:</label>
+						    		<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nome do campo">
+						  		</div>
+					  		</div>
+						  	<div class="col-sm-6">
+								<div class="form-group">
+							    	<label for="exampleInputEmail1">Descrição:</label>
+						    		<textarea  class="form-control" id="exampleInputEmail1" placeholder="Descrição" style="resize:vertical;"></textarea>
+						  		</div>
+							</div>
+							<div class="col-sm-1" style="text-align: right; padding: 0 15px 0 0; margin: 0 0 10px 0" >
+								<a class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Apagar</a>
+							</div>
+				  		</div>
+			  		</div>
+			  		<div class="submit-modelo" style="clear:both; padding: 10px 0; border-top:1px solid #DDD">
+			  			<a class="btn btn-sm btn-success" id="btn-addcampo"><i class="fa fa-plus"></i> Adicionar mais um campo</a>			  			
+			  			<input style="float: right;" type="submit" class="btn btn-primary" value="Criar modelo"/>
+			  			<input style="float: right; margin: 0 6px 0 0" type="button" class="btn btn-default" value="Cancelar"/>
+			  		</div>
+				</div>
+			</div>	  
+	  		<div class="checkbox">
+	    		<label>
+	    			<input type="checkbox"> Check me out
+	    		</label>
+	  		</div>
+	  		<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+    </div>  
+</div>
+<script>
+	$('#btn-addcampo').click(function(){
+		bloco = '<div class="row bs-callout" style="padding: 10px 0 0 0 ; margin: 0 0 15px 0"> <div class="col-sm-5"> <div class="form-group" > <label for="exampleInputEmail1">Campo:</label> <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nome do campo"> </div> </div> <div class="col-sm-6"> <div class="form-group"> <label for="exampleInputEmail1">Descrição:</label> <textarea class="form-control" id="exampleInputEmail1" placeholder="Descrição" style="resize:vertical;"></textarea> </div> </div> <div class="col-sm-1" style="text-align: right; padding: 0 15px 0 0; margin: 0 0 10px 0" > <a class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Apagar</a> </div> </div>'
+		$('.boxcampos').append(bloco);		
+	});
+</script>
+

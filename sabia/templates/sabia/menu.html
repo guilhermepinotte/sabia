@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'sabia:home' %}"><i class="fa fa-twitter"></i>&nbspSabiá Project</a>
+      <a class="navbar-brand" href="{% url 'sabia:home' %}" style="color:white"><i class="fa fa-twitter"></i>&nbspSabiá Project</a>
     </div>
     
     <div class="navbar-collapse collapse">
@@ -17,17 +17,17 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-file-text"></i>&nbspFichamentos <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="{% url 'sabia:fichamentos' %}">Meus Fichamentos</a></li>
-            <li><a href="#">Fazer Novo</a></li>
+            <li><a href="{% url 'sabia:novofichamento' %}">Fazer Novo</a></li>
             <li class="divider"></li>
             <li><a href="#">Avaliar Fichamento</a></li>
-            <li><a href="#">Criar Modelos de Fichamento</a></li>
+            <li><a href="{% url 'sabia:novomodelo' %}">Criar Modelo de Fichamento</a></li>
           </ul>
         </li>
         <li class="dropdown {{activeArtigos}}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-paperclip"></i>&nbspArtigos <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="{% url 'sabia:artigos' %}">Meus Artigos</a></li>
-            <li><a href="#">Cadastrar Novo</a></li>
+            <li><a href="{% url 'sabia:novoartigo' %}">Cadastrar Novo</a></li>
           </ul>
         </li>
         <li class="activeAvaliacoes"><a href="{% url 'sabia:avaliacoes' %}"><i class="fa fa-pencil"></i>&nbspAvaliações</a></li>
@@ -36,7 +36,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><i class="fa fa-envelope-o"></i></a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.username}}<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.username}}&nbsp<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#"><i class="fa fa-cogs"></i>&nbspConfigurações</a></li>
             <li class="divider"></li>
