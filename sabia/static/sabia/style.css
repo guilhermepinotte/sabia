@@ -1,7 +1,8 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
 	padding-top: 50px;
-    padding-bottom: 20px;
+	padding-bottom: 20px;
+	background-image: url('imagens/background/kindajean.png');    
 }
 
 #container-form-cadastro {
@@ -14,10 +15,18 @@ body {
 	background-color: #FFF;
 }
 
-#background-cadastro {
-	background: #EEE;
+#body-index {
+	background: #FFF;
 }
 
 #radio-box-cadastro {
 	margin-bottom: 15px;
+}
+
+#table-artigos {
+	background-color: #FFF;
+}
+
+#btn-inserir-artigo {
+	margin-bottom: 8px;
 }

@@ -12,7 +12,7 @@ class UserProfile(models.Model):
         return (tipo == 'professor' or tipo == 'aluno')
     
     def __str__(self):
-        return self.user.nome
+        return self.user.name
     
 class Artigo(models.Model):
     idUsuario = models.ForeignKey(UserProfile)
