@@ -1,1 +1,66 @@
-<h1>Modelo de Fichamentos</h1>
+<h1>Modelos de Fichamento</h1>
+
+{% if msg_success %}
+ <div class="alert alert-success" role="alert">
+  	{{ msg_success|safe}}
+</div>
+{% endif%}
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="boxmodelos">
+		{% if meus_modelos %}
+		    <div class="cabecalhomodelo row">
+		    	<div class="modelonome col-xs-4">
+		    		Modelo
+		    	</div>
+		    	<div class="modelodescricao col-xs-8">
+		    		Descrição		
+		    	</div>
+		    </div>
+			{% for modelo in meus_modelos %}
+		    <div class="linhamodelo row" id="{{ modelo.id}}">
+		    	<div class="modelonome col-xs-4">
+		    		{{ modelo.nome}}
+		    	</div>
+		    	<div class="modelodescricao col-xs-6">
+		    		{{ modelo.descricao}}
+		    	</div>
+		    	<div class="modelobtns col-lg-2">
+		    		<a href="/sabia/fichamentos/modelos/{{modelo.id}}/edita" class="btn btn-xs btn-info"><i class="glyphicon glyphicon-pencil"></i> Editar</a>&nbsp;
+		    		<a href="javascript:excluirModelo({{modelo.id}})" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+		    	</div>
+		    </div>
+	    	{% endfor%}
+		{% endif%}
+		</div>
+		<div class="boxoutrosmodelos">
+		
+		    <div class="cabecalhomodelo row">
+		    	<div class="modelonome col-xs-8">
+		    		Modelo
+		    	</div>
+		    	<div class="modelodescricao col-xs-4">
+		    		Autor		
+		    	</div>
+		    </div>
+		 {% if todos_modelos %}
+			{% for modelo in todos_modelos %}
+		    <div class="linhamodelo row" id="{{ modelo.id}}">
+		    	<div class="modelonome col-xs-8">
+		    		{{ modelo.nome}}
+		    	</div>
+		    	<div class="modelodescricao col-xs-4">
+		    		{{ modelo.descricao}}
+		    	</div>
+		    </div>
+	    	{% endfor %}	    		    
+		{% endif%}
+		{% if todos_modelosvazio %}
+			<div class="linhamodelo" style="padding: 5px 0 0 0;">		    	
+		    	<center><span style="font-size:12px; color:#999">Não há outros modelos</span></center>		    	
+		    </div>
+		{% endif%}
+		</div>		
+	</div>
+</div>

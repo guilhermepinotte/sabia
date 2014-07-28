@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from sabia.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 def IndexView(request):
 	if request.method == 'POST':
@@ -55,7 +56,6 @@ def CadastrarUsuario(request):
 			usuario.save()
 			userprofile.user = usuario
 			userprofile.save()
-			registrado = True
 			return render(request,'sabia/cadastro-msg.html',
 				{'sucess_message': "Usuário cadastrado com sucesso"})
 
@@ -80,7 +80,7 @@ def Fichamentos(request):
 		'conteudo': conteudo})
 
 @login_required	
-def novoFichamento(request):
+def novoFichamento(request):	
 	conteudo = 'sabia/fichamento/novo_fichamento.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
@@ -104,27 +104,155 @@ def editaFichamento(request,get_id):
 	
 #### MODELOS
 @login_required	
-def Modelos(request):
+def Modelos(request):	
+	#Buscar mensagem para mostrar ao usuário	
+	if 'msg_success' in request.session:
+		msg = request.session['msg']
+		request.session['msg'] = False
+	else:
+		msg=False
+	
+	#Buscar Modelos Salvos	
+	meus_modelos = Modelo.objects.filter(idUsuario = request.user, deletado = False)
+	
+	#Buscar os demais modelos
+	todos_modelos = Modelo.objects.filter(idUsuario = request.user, deletado = False)
+	tam = len(todos_modelos)
+	
+	if  tam > 0:
+		todos_modelosvazio = True
+	else:
+		todos_modelosvazio
+			
 	conteudo = 'sabia/fichamento/lista_modelo.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
+		'msg_sucess':msg,
+		'meus_modelos':meus_modelos,
+		'todos_modelosvazio':todos_modelosvazio,
 		'conteudo': conteudo})
 	
 @login_required	
 def novoModelo(request):
-	conteudo = 'sabia/fichamento/novo_modelo.html'
+	conteudo = 'sabia/fichamento/novo_modelo.html'	
+	
+	if request.method == 'POST':
+		#Nome do Modelo		
+		modelonome      = request.POST['modelonome']
+		modelodescricao = request.POST['modelodescricao']
+		
+		modelo = Modelo()
+		modelo.idUsuario    = request.user
+		modelo.nome         = modelonome
+		modelo.descricao    = modelodescricao
+		modelo.dataCadastro = timezone.now()
+		modelo.save()
+				
+		#Campos
+		qtd = int(request.POST['qtdcampos'])
+		for i in range(1,qtd+1):
+			namecampo = 'camponome'+str(i)
+			descricao = 'campodescricao'+str(i)			
+			if (namecampo in request.POST):									
+				campo = Campo()
+				campo.idModelo  = modelo
+				campo.label     = request.POST[namecampo]
+				campo.descricao = request.POST[descricao]		
+				campo.save()
+				
+		request.session['msg_success']='<b>Modelo:</b> O novo modelo foi criado com sucesso.'
+		return HttpResponseRedirect("/sabia/fichamentos/modelos")
+		
 	return render(request,'sabia/painel.html', 
-		{'activeFichamentos': "active",
+		{'activeFichamentos': "active",		
 		'conteudo': conteudo})
+	
 	
 @login_required	
 def editaModelo(request,get_id):
 	conteudo = 'sabia/fichamento/edita_modelo.html'
+		
+	if request.method == 'POST':		
+		try:
+			#Nome do Modelo		
+			modeloid        = request.POST['modeloid']
+			modelonome      = request.POST['modelonome']
+			modelodescricao = request.POST['modelodescricao']		
+			modelo = Modelo.objects.get(id=modeloid)
+						
+			#modelo.idUsuario    = request.user
+			modelo.nome         = modelonome
+			modelo.descricao    = modelodescricao
+			modelo.dataCadastro = timezone.now()
+			modelo.save()		
+			
+			#Campos - montar uma lista
+			qtd = int(request.POST['qtdcampos'])
+			#Nome e Descrição dos campos
+			for i in range(1,qtd+1):
+				inputcampoid   = 'campoid'+str(i)
+				inputcamponame = 'camponome'+str(i)
+				inputdescricao = 'campodescricao'+str(i)
+				if (inputcamponame in request.POST):
+					campoid = request.POST[inputcampoid]					
+					if campoid == 'camponovo':
+						#Novo campo adicionado na edição		
+						campo = Campo()						
+						campo.idUsuario = request.user
+						campo.dataCadastro = timezone.now()
+					else:
+						#O campo foi só alterado
+						campo = Campo.objects.get(id=campoid)		
+					
+					campo.idModelo  = modelo
+					campo.label     = request.POST[inputcamponame]
+					campo.descricao = request.POST[inputdescricao]		
+					campo.save()
+					
+			request.session['msg_success']='<b>Modelo:</b> As alterações foram salvas com sucesso.'
+			return HttpResponseRedirect("/sabia/fichamentos/modelos")
+		except Exception as e:
+			print (e)
+			request.session['msg_danger']='<b>Modelo:</b> As alterações <b>não</b> foram salvas.'
+	
+	#Exibir página de Edição
+	modelo = Modelo.objects.get(id = get_id)
+	campos = Campo.objects.filter(idModelo = get_id , deletado=False)
+	qtdcampo = len(campos)		
+	
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
+		'modelo':modelo,
+		'campos':campos,
+		'qtdcampo':qtdcampo,
 		'conteudo': conteudo,
 		'get_id':get_id})	
-	
+
+@login_required 
+@csrf_exempt
+def ajaxModelo(request):
+	try:
+		if request.method == 'POST' and request.is_ajax():
+			op = request.POST['op']
+			
+			if op == "apagar-campo":
+				campoid = int(request.POST['campoid'])			
+				campo = Campo.objects.get(id=campoid)
+				campo.deletado = True
+				campo.save()				
+				return HttpResponse("True")
+			
+			elif op == "apagar-modelo":
+				modeloid = int(request.POST['modeloid'])				
+				modelo = Modelo.objects.get(id=modeloid)
+				
+				modelo.deletado = True
+				modelo.save()				
+				return HttpResponse("True")
+			
+	except Exception as e:		
+		return HttpResponse('False')
+
 @login_required	
 def verModelo(request,get_id):
 	conteudo = 'sabia/fichamento/ver_modelo.html'

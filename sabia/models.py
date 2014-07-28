@@ -4,18 +4,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
-    #Linha necessária. Linkando com UserProfile com User de do Model
+    #Linha necessaria. Linkando UserProfile com User do Model
     user = models.OneToOneField(User)
-    tipo = models.CharField(max_length=255) #tipo só pode assumir dois tipos: [professor] e [aluno]
+    tipo = models.CharField(max_length=255) #tipo so pode assumir dois tipos: [professor] e [aluno]
     
     def ehUsuarioValido(self, tipo):
         return (tipo == 'professor' or tipo == 'aluno')
     
     def __str__(self):
-        return self.user.nome
+        return self.user
     
 class Artigo(models.Model):
-    idUsuario = models.OneToOneField(User)
+    idUsuario = models.ForeignKey(User)
     titulo = models.CharField(max_length=255)
     autor = models.CharField(max_length=255)
     descricao = models.TextField()
@@ -25,14 +25,14 @@ class Artigo(models.Model):
         return self.titulo
     
 class Fichamento(models.Model):
-    idUsuario = models.OneToOneField(User)
-    idArtigo = models.OneToOneField(Artigo)
+    idUsuario = models.ForeignKey(User)
+    idArtigo = models.ForeignKey(Artigo)
     dataCadastro = models.DateTimeField('data de cadastro')
     dataAlteracao = models.DateTimeField('data de alteracao')
 
 class Avaliacao(models.Model):
-    idFichamento = models.OneToOneField(Fichamento)
-    idUsuario = models.OneToOneField(User)
+    idFichamento = models.ForeignKey(Fichamento)
+    idUsuario = models.ForeignKey(User)
     consideracao = models.TextField()
     nota = models.FloatField()
     dataAvaliacao = models.DateTimeField('data de avaliacao do artigo')
@@ -43,24 +43,27 @@ class Avaliacao(models.Model):
         return self.nota
     
 class Modelo(models.Model):
-    idUsuario = models.OneToOneField(User)
+    idUsuario = models.ForeignKey(User)
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
     dataCadastro = models.DateTimeField('data de cadastro')
+    deletado  = models.BooleanField(default = False)
     
     def __str__(self):
         return self.nome
     
 class Campo(models.Model):
-    idModelo = models.OneToOneField(Modelo)
+    idModelo = models.ForeignKey(Modelo)
     label = models.CharField(max_length=255)
+    descricao = models.TextField()
+    deletado  = models.BooleanField(default = False)
     
     def __str__(self):
         return self.label 
     
 class Resposta(models.Model):
-    idCampo = models.OneToOneField(Campo)
-    idFichamento = models.OneToOneField(Fichamento)
+    idCampo = models.ForeignKey(Campo)
+    idFichamento = models.ForeignKey(Fichamento)
     resposta = models.TextField()
     
     def __str__(self):

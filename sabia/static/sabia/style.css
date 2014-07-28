@@ -23,3 +23,52 @@ body {
 #radio-box-cadastro {
 	margin-bottom: 15px;
 }
+
+
+/*
+*  F I C H A M E N T O S
+*/
+.boxmodelos{
+	overflow:hidden;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	width: 74%;
+	float: left
+}
+
+.boxoutrosmodelos{
+	width: 25%;
+	float: right;
+	overflow:hidden;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+}
+
+/* M O D E L O
+*/
+
+.boxmodelos .cabecalhomodelo  {clear: both; min-height:32px; background-color:#aeddff; padding: 7px 0 0 0; margin: 0;overflow: hidden}
+.boxmodelos .cabecalhomodelo .modelonome     { font-size:15px; font-weight:bold; overflow: hidden;}
+.boxmodelos .cabecalhomodelo .modelodescricao{ font-size:15px; font-weight:bold; overflow: hidden;}
+.boxmodelos .cabecalhomodelo .modelobtns     {float: right; width:15%; font-size:12px; overflow: hidden; min-width:130px; padding: 0}
+
+.boxmodelos .linhamodelo  {clear: both; min-height:32px; border-bottom:1px solid #DDD; padding: 0 0 0 0; margin: 0;overflow: hidden}
+.boxmodelos .linhamodelo:hover{background-color:#E0F0FF}
+.boxmodelos .linhamodelo .modelonome     { font-size:12px; overflow: hidden; padding-top: 9px; max-height: 28px}
+.boxmodelos .linhamodelo .modelodescricao{ font-size:12px; overflow: hidden; padding-top: 9px; max-height: 28px}
+.boxmodelos .linhamodelo .modelobtns     { float: right; width:15%; font-size:12px; overflow: hidden; min-width:130px; padding: 5px 0 0 0}
+
+.boxoutrosmodelos .cabecalhomodelo  {clear: both; min-height:32px; background-color:#d5edff; padding: 7px 0 0 0; margin: 0;overflow: hidden}
+.boxoutrosmodelos .cabecalhomodelo .modelonome     { font-size:15px; font-weight:bold; overflow: hidden;}
+.boxoutrosmodelos .cabecalhomodelo .modelodescricao{ font-size:15px; font-weight:bold; overflow: hidden;}
+.boxoutrosmodelos .cabecalhomodelo .modelobtns     {float: right; width:15%; font-size:12px; overflow: hidden; min-width:130px; padding: 0}
+
+.boxoutrosmodelos .linhamodelo  {clear: both; min-height:32px; border-bottom:1px solid #DDD; padding: 0 0 0 0; margin: 0;overflow: hidden}
+.boxoutrosmodelos .linhamodelo:hover{background-color:#E0F0FF}
+.boxoutrosmodelos .linhamodelo .modelonome     { font-size:12px; overflow: hidden; padding-top: 9px; max-height: 28px}
+.boxoutrosmodelos .linhamodelo .modelodescricao{ font-size:12px; overflow: hidden; padding-top: 9px; max-height: 28px}
+.boxoutrosmodelos .linhamodelo .modelobtns     { float: right; width:15%; font-size:12px; overflow: hidden; min-width:130px; padding: 5px 0 0 0}
+
+
