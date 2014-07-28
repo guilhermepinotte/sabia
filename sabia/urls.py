@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     #Artigos
     url(r'^artigos/$', views.Artigos, name='artigos'),
     url(r'^artigos/novo$', views.novoArtigo, name='novoartigo'),
+    url(r'^artigos/novo/new$', views.CadastrarArtigo, name='cadastrarArtigo'),
     
     #Avaliacoes
     url(r'^avaliacoes/$', views.Avaliacoes, name='avaliacoes'),

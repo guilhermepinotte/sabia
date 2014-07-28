@@ -14,7 +14,7 @@ $(document).ready( function () {
 			"sUrl":            "",
 			"sZeroRecords":    "Nenhum registro para exibir",
 			"paginate": {
-      			"first": 	 "Primeira página",
+      			"first": 	"Primeira página",
       			"previous": "Anterior",
 			    "next":     "Próxima",
 			    "last":     "Última página",
@@ -25,6 +25,7 @@ $(document).ready( function () {
     	"pagingType": "full_numbers",
   		"aoColumns": [ // tabela com 8 colunas
 		     null, // coluna ordenável
+		     null,
 		     null,
 		     { "bSortable": false } // coluna não ordenável
 	    ]  	

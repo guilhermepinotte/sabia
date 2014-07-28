@@ -8,6 +8,8 @@ from sabia.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+import pprint
+
 def IndexView(request):
 	if request.method == 'POST':
 		username = request.POST['username']
@@ -138,20 +140,53 @@ def verModelo(request,get_id):
 #
 @login_required	
 def Artigos(request):
+	error_message = False
+	success_message = False
+	if 'error_message' in request.session:
+		error_message = request.session['error_message']
+		request.session['error_message'] = False
+	elif 'success_message' in request.session:
+		success_message = request.session['success_message']
+		request.session['success_message'] = False
+			
 	conteudo = 'sabia/artigo/lista_artigos.html'
 	artigos = Artigo.objects.filter(idUsuario=request.user.id)
 	return render(request,'sabia/painel.html',
 				{'activeArtigos': "active",
 				'artigos': artigos,
-				'conteudo': conteudo})	
+				'conteudo': conteudo,
+				'success_msg': success_message,
+				'error_msg': error_message})
 
 @login_required	
 def novoArtigo(request):
-	conteudo = 'sabia/artigo/novo_artigo.html'	
+	conteudo = 'sabia/artigo/novo_artigo.html'
 	return render(request,'sabia/painel.html',
 				{'activeArtigos': "active",
 				'conteudo': conteudo})
-			
+
+@login_required	
+def CadastrarArtigo(request):
+	if request.method == 'POST':
+		try:
+			artigo = Artigo()
+			artigo.idUsuario = request.user
+			artigo.titulo = request.POST['titulo']
+			artigo.autor = request.POST['autor']
+			artigo.texto = request.POST['texto']
+			artigo.dataCadastro = timezone.now()
+		except KeyError as a:
+			request.session['error_message'] = "<b>Erro no cadastro</b>"
+			return HttpResponseRedirect('/sabia/artigos')
+			# return render(request,'sabia/artigo/lista_artigos.html',
+			# 	{'error_message': "Erro no cadastro"})
+		else:
+			artigo.save()
+			request.session['success_message'] = "<b>Artigo cadastrado com sucesso!</b>"
+			return HttpResponseRedirect('/sabia/artigos')
+			# return render(request,'sabia/artigo/listaartigos.html',
+			# 	{'sucess_message': "Usuário cadastrado com sucesso"})
+
 #
 #  A V A L I A C A O
 #
