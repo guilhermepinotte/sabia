@@ -28,13 +28,18 @@ body {
 /*
 *  F I C H A M E N T O S
 */
+
+/* M O D E L O
+*/
+
 .boxmodelos{
 	overflow:hidden;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	width: 74%;
-	float: left
+	float: left;
+	margin:0 0 15px 0;
 }
 
 .boxoutrosmodelos{
@@ -43,11 +48,13 @@ body {
 	overflow:hidden;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;	
+	border-radius: 5px;
+	margin:0 0 15px 0;
 }
-
-/* M O D E L O
-*/
+.modelosubtitulo{
+	font-size:22px;
+	margin: 0 0 8px 0;
+}
 
 .boxmodelos .cabecalhomodelo  {clear: both; min-height:32px; background-color:#aeddff; padding: 7px 0 0 0; margin: 0;overflow: hidden}
 .boxmodelos .cabecalhomodelo .modelonome     { font-size:15px; font-weight:bold; overflow: hidden;}

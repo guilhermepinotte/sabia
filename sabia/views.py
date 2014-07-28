@@ -107,29 +107,38 @@ def editaFichamento(request,get_id):
 def Modelos(request):	
 	#Buscar mensagem para mostrar ao usuário	
 	if 'msg_success' in request.session:
-		msg = request.session['msg']
-		request.session['msg'] = False
+		msg = request.session['msg_success']
+		request.session['msg_success'] = False
 	else:
 		msg=False
 	
 	#Buscar Modelos Salvos	
 	meus_modelos = Modelo.objects.filter(idUsuario = request.user, deletado = False)
+	tam1 = len(meus_modelos)
 	
 	#Buscar os demais modelos
-	todos_modelos = Modelo.objects.filter(idUsuario = request.user, deletado = False)
-	tam = len(todos_modelos)
+	todos_modelos = Modelo.objects.exclude(idUsuario=request.user).filter(deletado = False)
+	tam2 = len(todos_modelos)			
 	
-	if  tam > 0:
-		todos_modelosvazio = True
+	if  tam1 > 0:		
+		meus_modelosvazio = False
 	else:
-		todos_modelosvazio
+		meus_modelosvazio = True
+			
+	if  tam2 > 0:
+		todos_modelosvazio = False
+	else:
+		todos_modelosvazio = True
 			
 	conteudo = 'sabia/fichamento/lista_modelo.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
-		'msg_sucess':msg,
+		'msg_success':msg,
 		'meus_modelos':meus_modelos,
+		'meus_modelosvazio':meus_modelosvazio,
+		'todos_modelos':todos_modelos,
 		'todos_modelosvazio':todos_modelosvazio,
+		
 		'conteudo': conteudo})
 	
 @login_required	

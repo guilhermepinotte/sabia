@@ -1,15 +1,16 @@
 <h1>Modelos de Fichamento</h1>
 
-{% if msg_success %}
- <div class="alert alert-success" role="alert">
-  	{{ msg_success|safe}}
-</div>
-{% endif%}
-
 <div class="panel panel-default">
 	<div class="panel-body">
+	
+		{% if msg_success %}
+		 <div class="alert alert-success" role="alert">
+		  	{{ msg_success|safe}}
+		</div>
+		{% endif%}	
+	
 		<div class="boxmodelos">
-		{% if meus_modelos %}
+			<div class="modelosubtitulo">Meus Modelos </div>	
 		    <div class="cabecalhomodelo row">
 		    	<div class="modelonome col-xs-4">
 		    		Modelo
@@ -18,6 +19,7 @@
 		    		Descrição		
 		    	</div>
 		    </div>
+		{% if meus_modelos %}
 			{% for modelo in meus_modelos %}
 		    <div class="linhamodelo row" id="{{ modelo.id}}">
 		    	<div class="modelonome col-xs-4">
@@ -31,11 +33,16 @@
 		    		<a href="javascript:excluirModelo({{modelo.id}})" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
 		    	</div>
 		    </div>
-	    	{% endfor%}
+	    	{% endfor%}    
 		{% endif%}
+		{% if meus_modelosvazio %}
+			<div class="linhamodelo" style="padding: 5px 0 0 0;">		    	
+		    	<center><span style="font-size:12px; color:#999">Você não possui Modelos de fichamento criados</span></center>		    	
+		    </div>
+		{% endif%}			
 		</div>
 		<div class="boxoutrosmodelos">
-		
+			<div class="modelosubtitulo"> Modelos </div>	
 		    <div class="cabecalhomodelo row">
 		    	<div class="modelonome col-xs-8">
 		    		Modelo
@@ -51,7 +58,7 @@
 		    		{{ modelo.nome}}
 		    	</div>
 		    	<div class="modelodescricao col-xs-4">
-		    		{{ modelo.descricao}}
+		    		{{ modelo.idUsuario}}
 		    	</div>
 		    </div>
 	    	{% endfor %}	    		    
@@ -64,3 +71,6 @@
 		</div>		
 	</div>
 </div>
+
+		
+		
