@@ -18,10 +18,11 @@ urlpatterns = patterns('',
     url(r'^fichamentos/(?P<get_id>\d+)/ver', views.verFichamento, name='verfichamento'),
     url(r'^fichamentos/(?P<get_id>\d+)/edita$', views.editaFichamento, name='editafichamento'),
     
-    url(r'^fichamentos/modelo/$', views.Modelos, name='modelo'),    
-    url(r'^fichamentos/modelo/novo$', views.novoModelo, name='novomodelo'),
-    url(r'^fichamentos/modelo/(?P<get_id>\d+)/ver$', views.verModelo, name='vermodelo'),
-    url(r'^fichamentos/modelo/(?P<get_id>\d+)/edita$', views.editaModelo, name='editamodelo'),    
+    url(r'^fichamentos/modelos/$', views.Modelos, name='modelos'),
+    url(r'^fichamentos/modelos/novo$', views.novoModelo, name='novomodelo'),
+    url(r'^fichamentos/modelos/(?P<get_id>\d+)/ver$', views.verModelo, name='vermodelo'),
+    url(r'^fichamentos/modelos/(?P<get_id>\d+)/edita$', views.editaModelo, name='editamodelo'),  
+    url(r'^fichamentos/modelos/ajaxmodelo$', views.ajaxModelo, name='ajaxmodelo'),  
     
     #Artigos
     url(r'^artigos/$', views.Artigos, name='artigos'),

@@ -4,9 +4,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
-    #Linha necessária. Linkando com UserProfile com User de do Model
+    #Linha necessaria. Linkando UserProfile com User do Model
     user = models.OneToOneField(User)
-    tipo = models.CharField(max_length=255) #tipo só pode assumir dois tipos: [professor] e [aluno]
+    tipo = models.CharField(max_length=255) #tipo so pode assumir dois tipos: [professor] e [aluno]
     
     def ehUsuarioValido(self, tipo):
         return (tipo == 'professor' or tipo == 'aluno')
@@ -47,6 +47,7 @@ class Modelo(models.Model):
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
     dataCadastro = models.DateTimeField('data de cadastro')
+    deletado  = models.BooleanField(default = False)
     
     def __str__(self):
         return self.nome
@@ -54,6 +55,8 @@ class Modelo(models.Model):
 class Campo(models.Model):
     idModelo = models.ForeignKey(Modelo)
     label = models.CharField(max_length=255)
+    descricao = models.TextField()
+    deletado  = models.BooleanField(default = False)
     
     def __str__(self):
         return self.label 

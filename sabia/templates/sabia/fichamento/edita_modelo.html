@@ -1,1 +1,57 @@
-<h1>Edita Modelo <{{ get_id }}> </h1>
+<h1>Alterar Modelo </h1>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		{{debug}}
+		<form  role="form" action="" method="POST" onsubmit="return validarModelo(this);" >
+		    {% csrf_token %}		
+		    <input type="hidden" id="modeloid" name="modeloid" value="{{modelo.id}}">    		    
+			<div class="form-group input-group-lg">
+		    	<label for="modelonome">Nome:</label>
+	    		<input type="text" class="form-control" id="modelonome" name="modelonome" placeholder="Nome do Modelo" value="{{modelo.nome}}">
+	  		</div>
+			<div class="form-group">
+		    	<label for="modelodescricao">Descrição:</label>
+	    		<textarea type="text" class="form-control" id="modelodescricao" name="modelodescricao" placeholder="Descrição do Modelo" style="resize: vertical;">{{modelo.descricao}}</textarea>
+	  		</div>	  		
+ 			<div class="panel panel-default">
+				<div class="panel-heading">
+					<b>Campos:</b>
+				</div>
+				<div class="panel-body">
+					<div class="boxcampos">
+					{% for campo in campos %}		
+						<div class="row bs-callout bs-callout-warning boxcampo" style="padding: 10px 0 0 0; margin: 0 0 15px 0" id="{{forloop.counter}}">
+							<input type="hidden" id="campoid{{forloop.counter}}" name="campoid{{forloop.counter}}" value="{{campo.id}}">
+							<div class="col-sm-5">
+								<div class="form-group" >
+							    	<label for="exampleInputEmail1">Campo:</label>
+						    		<input type="text" class="form-control" id="camponome{{forloop.counter}}" name="camponome{{forloop.counter}}" placeholder="Nome do campo" value="{{campo.label}}">						    		
+						  		</div>
+					  		</div>
+						  	<div class="col-sm-6">
+								<div class="form-group">
+							    	<label for="exampleInputEmail1">Descrição:</label>
+						    		<textarea  class="form-control" id="campodescricao{{forloop.counter}}" name="campodescricao{{forloop.counter}}" placeholder="Descrição" style="resize:vertical;">{{campo.descricao}}</textarea>
+						  		</div>
+							</div>
+							<div class="col-sm-1" style="text-align: right; padding: 0 15px 0 0; margin: 0 0 10px 0" >
+								<a class="btn btn-xs btn-danger" href="javascript:excluirCampo({{forloop.counter}},{{campo.id}})"><i class="glyphicon glyphicon-trash"></i> Apagar</a>
+							</div>
+				  		</div>
+			  		{% endfor %}
+			  		</div>
+			  	<center><a class="btn btn-sm btn-success" id="btn-addcampo" href="javascript:addcampo('edit')"><i class="fa fa-plus"></i> Adicionar mais um campo</a></center>	
+				</div>				
+			</div>	  
+			<input type="hidden" id="qtdcampos" name="qtdcampos" value="{{qtdcampo}}">
+	  		<div class="submit-modelo" style="clear:both; padding: 10px 0; border-top:1px solid #DDD">		  					  				  			
+	  			<a href="/sabia/fichamentos/modelos" style="margin: 0 6px 0 0" type="button" class="btn btn-default">Voltar</a>
+	  			<input id="example" type="submit" class="btn btn-primary" value="Salvar Alterações"/>
+	  		</div>	
+	  			
+		</form>
+    </div>  
+</div>
+
+
