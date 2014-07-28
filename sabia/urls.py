@@ -27,6 +27,9 @@ urlpatterns = patterns('',
     #Artigos
     url(r'^artigos/$', views.Artigos, name='artigos'),
     url(r'^artigos/novo$', views.novoArtigo, name='novoartigo'),
+    url(r'^artigos/(?P<get_id>\d+)/ver$', views.VerArtigo, name='verartigo'),
+    url(r'^artigos/(?P<get_id>\d+)/edita$', views.EditarArtigoView, name='editarartigo'),
+    url(r'^artigos/(?P<get_id>\d+)/edita/art$', views.EditarArtigo, name='alterarartigo'),
     url(r'^artigos/novo/new$', views.CadastrarArtigo, name='cadastrarArtigo'),
     
     #Avaliacoes

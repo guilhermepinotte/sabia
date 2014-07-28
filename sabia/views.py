@@ -279,13 +279,22 @@ def verModelo(request,get_id):
 def Artigos(request):
 	error_message = False
 	success_message = False
+	error_message_alt = False
+	success_message_alt = False
 	if 'error_message' in request.session:
 		error_message = request.session['error_message']
 		request.session['error_message'] = False
-	elif 'success_message' in request.session:
+	if 'success_message' in request.session:
 		success_message = request.session['success_message']
 		request.session['success_message'] = False
-			
+	if 'success_message_alt' in request.session:
+		success_message_alt = request.session['success_message_alt']
+		request.session['success_message_alt'] = False
+	if 'error_message_alt' in request.session:
+		error_message_alt = request.session['error_message_alt']
+		request.session['error_message_alt'] = False	
+
+	print(success_message_alt)			
 	conteudo = 'sabia/artigo/lista_artigos.html'
 	artigos = Artigo.objects.filter(idUsuario=request.user.id)
 	return render(request,'sabia/painel.html',
@@ -293,7 +302,9 @@ def Artigos(request):
 				'artigos': artigos,
 				'conteudo': conteudo,
 				'success_msg': success_message,
-				'error_msg': error_message})
+				'error_msg': error_message,
+				'success_msg_alt': success_message_alt,
+				'error_msg_alt': error_message_alt})
 
 @login_required	
 def novoArtigo(request):
@@ -315,14 +326,44 @@ def CadastrarArtigo(request):
 		except KeyError as a:
 			request.session['error_message'] = "<b>Erro no cadastro</b>"
 			return HttpResponseRedirect('/sabia/artigos')
-			# return render(request,'sabia/artigo/lista_artigos.html',
-			# 	{'error_message': "Erro no cadastro"})
 		else:
 			artigo.save()
 			request.session['success_message'] = "<b>Artigo cadastrado com sucesso!</b>"
 			return HttpResponseRedirect('/sabia/artigos')
-			# return render(request,'sabia/artigo/listaartigos.html',
-			# 	{'sucess_message': "Usuário cadastrado com sucesso"})
+
+@login_required	
+def VerArtigo(request,get_id):
+	artigo = Artigo.objects.get(id=int(get_id))
+	conteudo = 'sabia/artigo/ver_artigo.html'
+	return render(request,'sabia/painel.html', 
+		{'activeArtigos': "active",
+		'conteudo': conteudo,
+		'artigo': artigo})
+
+@login_required	
+def EditarArtigoView(request,get_id):
+	artigo = Artigo.objects.get(id=int(get_id))
+	conteudo = 'sabia/artigo/alterar_artigo.html'
+	return render(request,'sabia/painel.html', 
+		{'activeArtigos': "active",
+		'conteudo': conteudo,
+		'artigo': artigo})
+
+@login_required	
+def EditarArtigo(request,get_id):
+	if request.method == 'POST':
+		try:
+			artigo = Artigo.objects.get(id=int(get_id))
+			artigo.titulo = request.POST['titulo']
+			artigo.autor = request.POST['autor']
+			artigo.texto = request.POST['texto']
+		except KeyError as a:
+			request.session['error_message_alt'] = "<b>Erro ao alterar artigo</b>"
+			return HttpResponseRedirect('/sabia/artigos')
+		else:
+			artigo.save()
+			request.session['success_message_alt'] = "<b>Artigo alterado com sucesso!</b>"
+			return HttpResponseRedirect('/sabia/artigos')
 
 #
 #  A V A L I A C A O

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>Ver Artigo</h1>
+      <div class="row" id="btn-inserir-artigo"> 
+	    <a class="btn btn-primary pull-right" href="/sabia/artigos/{{artigo.id}}/edita" role="button"><i class="fa fa-pencil"></i>&nbsp Alterar Artigo</a>
+	  </div>	
+
+  	  <div class="form-group">
+  	    <label for="titulo">Título</label>
+  	    <input type="text" class="form-control" id="titulo" name="titulo" value="{{artigo.titulo}}" disabled="true">
+  	  </div>
+  	  <div class="form-group">
+  	    <label for="autor">Autor</label>
+  	    <input type="text" class="form-control" id="autor" name="autor" value="{{artigo.autor}}" disabled="true">
+  	  </div>
+  	  <div class="form-group">
+        <label for="texto">Texto</label>
+        <textarea class="form-control" name="texto" rows="10" disabled="true">{{artigo.texto}}</textarea>
+      </div>
+  </div>
+</div>
