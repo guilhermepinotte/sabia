@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^artigos/(?P<get_id>\d+)/ver$', views.VerArtigo, name='verartigo'),
     url(r'^artigos/(?P<get_id>\d+)/edita$', views.EditarArtigoView, name='editarartigo'),
     url(r'^artigos/(?P<get_id>\d+)/edita/art$', views.EditarArtigo, name='alterarartigo'),
+    url(r'^artigos/(?P<get_id>\d+)/exc$', views.ExcluirArtigo, name='excluirartigo'),
     url(r'^artigos/novo/new$', views.CadastrarArtigo, name='cadastrarArtigo'),
     
     #Avaliacoes

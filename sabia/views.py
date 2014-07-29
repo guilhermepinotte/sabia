@@ -281,6 +281,8 @@ def Artigos(request):
 	success_message = False
 	error_message_alt = False
 	success_message_alt = False
+	error_message_exc = False
+	success_message_exc = False
 	if 'error_message' in request.session:
 		error_message = request.session['error_message']
 		request.session['error_message'] = False
@@ -292,7 +294,13 @@ def Artigos(request):
 		request.session['success_message_alt'] = False
 	if 'error_message_alt' in request.session:
 		error_message_alt = request.session['error_message_alt']
-		request.session['error_message_alt'] = False	
+		request.session['error_message_alt'] = False
+	if 'success_message_exc' in request.session:
+		success_message_exc = request.session['success_message_exc']
+		request.session['success_message_exc'] = False
+	if 'error_message_exc' in request.session:
+		error_message_exc = request.session['error_message_exc']
+		request.session['error_message_exc'] = False
 
 	print(success_message_alt)			
 	conteudo = 'sabia/artigo/lista_artigos.html'
@@ -304,7 +312,9 @@ def Artigos(request):
 				'success_msg': success_message,
 				'error_msg': error_message,
 				'success_msg_alt': success_message_alt,
-				'error_msg_alt': error_message_alt})
+				'error_msg_alt': error_message_alt,
+				'success_msg_exc': success_message_exc,
+				'error_msg_exc': error_message_exc})
 
 @login_required	
 def novoArtigo(request):
@@ -324,11 +334,11 @@ def CadastrarArtigo(request):
 			artigo.texto = request.POST['texto']
 			artigo.dataCadastro = timezone.now()
 		except KeyError as a:
-			request.session['error_message'] = "<b>Erro no cadastro</b>"
+			request.session['error_message'] = "Erro no cadastro"
 			return HttpResponseRedirect('/sabia/artigos')
 		else:
 			artigo.save()
-			request.session['success_message'] = "<b>Artigo cadastrado com sucesso!</b>"
+			request.session['success_message'] = "Artigo cadastrado com sucesso!"
 			return HttpResponseRedirect('/sabia/artigos')
 
 @login_required	
@@ -358,13 +368,24 @@ def EditarArtigo(request,get_id):
 			artigo.autor = request.POST['autor']
 			artigo.texto = request.POST['texto']
 		except KeyError as a:
-			request.session['error_message_alt'] = "<b>Erro ao alterar artigo</b>"
+			request.session['error_message_alt'] = "Erro ao alterar artigo"
 			return HttpResponseRedirect('/sabia/artigos')
 		else:
 			artigo.save()
-			request.session['success_message_alt'] = "<b>Artigo alterado com sucesso!</b>"
+			request.session['success_message_alt'] = "Artigo alterado com sucesso!"
 			return HttpResponseRedirect('/sabia/artigos')
 
+@login_required
+def ExcluirArtigo(request,get_id):
+	try:
+		artigo = Artigo.objects.get(id=int(get_id))
+	except KeyError as a:
+			request.session['error_message_exc'] = "Erro ao excluir artigo"
+			return HttpResponseRedirect('/sabia/artigos')
+	else:
+		artigo.delete()
+		request.session['success_message_exc'] = "Artigo excluído com sucesso!"
+		return HttpResponseRedirect('/sabia/artigos')
 #
 #  A V A L I A C A O
 #

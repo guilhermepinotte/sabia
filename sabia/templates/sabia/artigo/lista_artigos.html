@@ -5,7 +5,7 @@
     <span aria-hidden="true">&times;</span>
     <span class="sr-only">Close</span>
   </button>
-  {{success_msg|safe}}
+  <i class="fa fa-check"></i>&nbsp<b>{{success_msg|safe}}</b>
 </div>
 {% endif%}
 {% if error_msg %}
@@ -14,7 +14,7 @@
     <span aria-hidden="true">&times;</span>
     <span class="sr-only">Close</span>
   </button>
-  {{error_msg|safe}}
+  <i class="fa fa-warning"></i>&nbsp<b>{{error_msg|safe}}</b>
 </div>
 {% endif%}
 {% if error_msg_alt %}
@@ -23,7 +23,7 @@
     <span aria-hidden="true">&times;</span>
     <span class="sr-only">Close</span>
   </button>
-  {{error_msg_alt|safe}}
+  <i class="fa fa-warning"></i>&nbsp<b>{{error_msg_alt|safe}}</b>
 </div>
 {% endif%}
 {% if success_msg_alt %}
@@ -32,14 +32,32 @@
     <span aria-hidden="true">&times;</span>
     <span class="sr-only">Close</span>
   </button>
-  {{success_msg_alt|safe}}
+  <i class="fa fa-check"></i>&nbsp<b>{{success_msg_alt|safe}}</b>
+</div>
+{% endif%}
+{% if error_msg_exc %}
+ <div class="alert alert-danger alert-dismissible" role="alert">
+ <button type="button" class="close" data-dismiss="alert">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+  </button>
+  <i class="fa fa-warning"></i>&nbsp<b>{{error_msg_exc|safe}}</b>
+</div>
+{% endif%}
+{% if success_msg_exc %}
+ <div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+  </button>
+<i class="fa fa-check"></i>&nbsp</i><b>{{success_msg_exc|safe}}</b>
 </div>
 {% endif%}
 
 	<h1>Artigos</h1>
 
   <div class="row" id="btn-inserir-artigo"> 
-    <a class="btn btn-success pull-right" href="{% url 'sabia:novoartigo' %}" role="button"><i class="fa fa-plus"></i>&nbsp Inserir novo artigo</a>
+    <a class="btn btn-primary pull-right" href="{% url 'sabia:novoartigo' %}" role="button"><i class="fa fa-plus"></i>&nbsp Inserir novo artigo</a>
   </div>
   <div class="row">  
   	<table class="table table-hover table-bordered" id="table-artigos">
@@ -60,9 +78,9 @@
       	  	<td>{{artigo.autor}}</td>
             <td>{{artigo.dataCadastro}}</td>
             <td>
-              <a role="button" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></a>
-              <a role="button" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
-              <a role="button" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
+              <a role="button" href="#" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></a>
+              <a role="button" href="/sabia/artigos/{{artigo.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
+              <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
             </td>
       	  </tr>
         {% endfor %}   
