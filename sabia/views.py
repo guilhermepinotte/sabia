@@ -67,9 +67,14 @@ def CadastrarUsuario(request):
 @login_required		
 def Home(request):
 	conteudo = 'sabia/home/home.html'
+	artigos = Artigo.objects.filter(idUsuario=request.user.id)
+	modelos = Modelo.objects.filter(idUsuario=request.user.id)
+
 	return render(request,'sabia/painel.html', 
 		{'activeHome': "active",
-		'conteudo': conteudo})
+		'conteudo': conteudo,
+		'artigos': artigos,
+		'modelos': modelos})
 
 #
 #  F I C H A M E N T O
