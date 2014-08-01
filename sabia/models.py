@@ -14,8 +14,19 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user
     
+class Modelo(models.Model):
+    idUsuario = models.ForeignKey(User)
+    nome = models.CharField(max_length=255)
+    descricao = models.TextField()
+    dataCadastro = models.DateTimeField('data de cadastro')
+    deletado  = models.BooleanField(default = False)
+    
+    def __str__(self):
+        return self.nome
+    
 class Artigo(models.Model):
     idUsuario = models.ForeignKey(User)
+    # idModelo = models.ForeignKey(Modelo)
     titulo = models.CharField(max_length=255)
     autor = models.CharField(max_length=255)
     texto = models.TextField()
@@ -24,12 +35,22 @@ class Artigo(models.Model):
     def __str__(self):
         return self.titulo
     
+class Campo(models.Model):
+    idModelo = models.ForeignKey(Modelo)
+    label = models.CharField(max_length=255)
+    descricao = models.TextField()
+    deletado  = models.BooleanField(default = False)
+    
+    def __str__(self):
+        return self.label
+    
 class Fichamento(models.Model):
     idUsuario = models.ForeignKey(User)
     idArtigo = models.ForeignKey(Artigo)
+    nome = models.CharField(max_length=255)
     dataCadastro = models.DateTimeField('data de cadastro')
     dataAlteracao = models.DateTimeField('data de alteracao')
-
+    
 class Avaliacao(models.Model):
     idFichamento = models.ForeignKey(Fichamento)
     idUsuario = models.ForeignKey(User)
@@ -41,25 +62,6 @@ class Avaliacao(models.Model):
     
     def __str__(self):
         return self.nota
-    
-class Modelo(models.Model):
-    idUsuario = models.ForeignKey(User)
-    nome = models.CharField(max_length=255)
-    descricao = models.TextField()
-    dataCadastro = models.DateTimeField('data de cadastro')
-    deletado  = models.BooleanField(default = False)
-    
-    def __str__(self):
-        return self.nome
-    
-class Campo(models.Model):
-    idModelo = models.ForeignKey(Modelo)
-    label = models.CharField(max_length=255)
-    descricao = models.TextField()
-    deletado  = models.BooleanField(default = False)
-    
-    def __str__(self):
-        return self.label 
     
 class Resposta(models.Model):
     idCampo = models.ForeignKey(Campo)

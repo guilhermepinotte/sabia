@@ -28,6 +28,18 @@ body {
 /*
 *  F I C H A M E N T O S
 */
+#table-fichamentos {
+	background-color: #FFF;
+}
+
+#btn-inserir-fichamento {
+	margin-bottom: 8px;
+}
+
+#nav-fichamento {
+	margin-bottom: 10px;
+}
+
 
 /* M O D E L O
 */
@@ -78,6 +90,13 @@ body {
 .boxoutrosmodelos .linhamodelo .modelodescricao{ font-size:12px; overflow: hidden; padding-top: 9px; max-height: 28px}
 .boxoutrosmodelos .linhamodelo .modelobtns     { float: right; width:15%; font-size:12px; overflow: hidden; min-width:130px; padding: 5px 0 0 0}
 
+#btn-inserir-modelo {
+	margin-bottom: 8px;
+}
+
+/*
+*  A R T I G O S
+*/
 
 #table-artigos {
 	background-color: #FFF;

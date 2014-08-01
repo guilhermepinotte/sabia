@@ -1,1 +1,22 @@
-<h1>Novo Fichamentos</h1>
+<div class="row">
+  <div class="col-md-12">
+    <h1>Novo Fichamento</h1>
+    <hr>
+    <form role="form" action="{% url 'sabia:cadastrarArtigo' %}" method="POST">
+      {% csrf_token %} 
+  	  <div class="form-group">
+  	    <label for="titulo">Título</label>
+  	    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título do artigo">
+  	  </div>
+  	  <div class="form-group">
+  	    <label for="autor">Autor</label>
+  	    <input type="text" class="form-control" id="autor" name="autor" placeholder="Autor do artigo">
+  	  </div>
+  	  <div class="form-group">
+        <label for="texto">Texto</label>
+        <textarea class="form-control" name="texto" rows="10"></textarea>
+      </div>
+  	  <button type="submit" class="btn btn-lg btn-primary">Cadastrar</button>
+  	</form>
+  </div>  
+</div>  

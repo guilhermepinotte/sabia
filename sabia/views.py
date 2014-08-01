@@ -80,14 +80,49 @@ def Home(request):
 #  F I C H A M E N T O
 #
 @login_required	
-def Fichamentos(request):	
+def Fichamentos(request):
+	error_message = False
+	success_message = False
+	error_message_alt = False
+	success_message_alt = False
+	error_message_exc = False
+	success_message_exc = False
+	if 'error_message' in request.session:
+		error_message = request.session['error_message']
+		request.session['error_message'] = False
+	if 'success_message' in request.session:
+		success_message = request.session['success_message']
+		request.session['success_message'] = False
+	if 'success_message_alt' in request.session:
+		success_message_alt = request.session['success_message_alt']
+		request.session['success_message_alt'] = False
+	if 'error_message_alt' in request.session:
+		error_message_alt = request.session['error_message_alt']
+		request.session['error_message_alt'] = False
+	if 'success_message_exc' in request.session:
+		success_message_exc = request.session['success_message_exc']
+		request.session['success_message_exc'] = False
+	if 'error_message_exc' in request.session:
+		error_message_exc = request.session['error_message_exc']
+		request.session['error_message_exc'] = False
+
 	conteudo = 'sabia/fichamento/lista_fichamentos.html'
-	return render(request,'sabia/painel.html', 
-		{'activeFichamentos': "active",
-		'conteudo': conteudo})
+	fichamentos = Fichamento.objects.filter(idUsuario=request.user.id)
+	artigos = Artigo.objects.filter(idUsuario=request.user.id)
+	return render(request,'sabia/painel.html',
+				{'activeFichamentos': "active",
+				'fichamentos': fichamentos,
+				'artigos': artigos,
+				'conteudo': conteudo,
+				'success_msg': success_message,
+				'error_msg': error_message,
+				'success_msg_alt': success_message_alt,
+				'error_msg_alt': error_message_alt,
+				'success_msg_exc': success_message_exc,
+				'error_msg_exc': error_message_exc})
 
 @login_required	
-def novoFichamento(request):	
+def NovoFichamento(request,get_id):	
 	conteudo = 'sabia/fichamento/novo_fichamento.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
@@ -182,7 +217,6 @@ def novoModelo(request):
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",		
 		'conteudo': conteudo})
-	
 	
 @login_required	
 def editaModelo(request,get_id):
@@ -307,7 +341,6 @@ def Artigos(request):
 		error_message_exc = request.session['error_message_exc']
 		request.session['error_message_exc'] = False
 
-	print(success_message_alt)			
 	conteudo = 'sabia/artigo/lista_artigos.html'
 	artigos = Artigo.objects.filter(idUsuario=request.user.id)
 	return render(request,'sabia/painel.html',
@@ -334,6 +367,7 @@ def CadastrarArtigo(request):
 		try:
 			artigo = Artigo()
 			artigo.idUsuario = request.user
+			# artigo.idModelo = Modelo()
 			artigo.titulo = request.POST['titulo']
 			artigo.autor = request.POST['autor']
 			artigo.texto = request.POST['texto']
