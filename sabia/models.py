@@ -26,7 +26,7 @@ class Modelo(models.Model):
     
 class Artigo(models.Model):
     idUsuario = models.ForeignKey(User)
-    # idModelo = models.ForeignKey(Modelo)
+    idModelo = models.ForeignKey(Modelo)
     titulo = models.CharField(max_length=255)
     autor = models.CharField(max_length=255)
     texto = models.TextField()

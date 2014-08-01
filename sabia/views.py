@@ -41,21 +41,25 @@ def CadastrarUsuario(request):
 			#Campos da table auth_user (django)
 			usuario = User()
 			usuario.email = request.POST['email']
-			usuario.set_password(request.POST['senha'])		
+			usuario.set_password(request.POST['senha'])
 			usuario.name = request.POST['nome']
-			usuario.username = request.POST['nome']					
-			usuario.tipo = request.POST['tipo']				
+			usuario.username = request.POST['nome']
+			usuario.tipo = request.POST['tipo']
 			usuario.dataCadastro = timezone.now()
 			
 			#Campos da sabia_userprofile
-			userprofile = UserProfile()			
-			userprofile.tipo = request.POST['tipo']						
+			userprofile = UserProfile()
+			userprofile.tipo = request.POST['tipo']
 				
 		except KeyError:
 			return render(request,'sabia/cadastro-msg.html',
 				{'error_message': "Erro no cadastro"})
 		else:
 			usuario.save()
+
+			#Cadastrar Modelo de Fichamento Default
+			CadastrarModeloDefault(usuario)
+
 			userprofile.user = usuario
 			userprofile.save()
 			return render(request,'sabia/cadastro-msg.html',
@@ -139,6 +143,7 @@ def verFichamento(request,get_id):
 @login_required	
 def editaFichamento(request,get_id):	
 	conteudo = 'sabia/fichamento/edita_fichamento.html'
+
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
 		'conteudo': conteudo,
@@ -310,7 +315,28 @@ def verModelo(request,get_id):
 		{'activeFichamentos': "active",
 		'conteudo': conteudo,
 		'get_id':get_id})	
-	
+
+def CadastrarModeloDefault(usuario):
+	modelo = Modelo()
+	modelo.idUsuario = usuario
+	modelo.nome = 'Default'
+	modelo.descricao = 'Modelo Default de Fichamento'
+	modelo.dataCadastro = timezone.now()
+	modelo.save()
+			
+	#Campos
+	campo1 = Campo()
+	campo1.idModelo = modelo
+	campo1.label     = 'Pontos Positivos'
+	campo1.descricao = 'Aqui você deve descrever os pontos positivos encontrados na leitura do artigo'
+	campo1.save()
+
+	campo2 = Campo()
+	campo2.idModelo = modelo
+	campo2.label     = 'Pontos Negativos'
+	campo2.descricao = 'Aqui você deve descrever os pontos negativos encontrados na leitura do artigo'
+	campo2.save()
+
 #
 #  A R T I G O S
 #
@@ -356,9 +382,11 @@ def Artigos(request):
 
 @login_required	
 def novoArtigo(request):
+	modelos = Modelo.objects.filter(idUsuario=request.user.id)
 	conteudo = 'sabia/artigo/novo_artigo.html'
 	return render(request,'sabia/painel.html',
 				{'activeArtigos': "active",
+				'modelos': modelos,
 				'conteudo': conteudo})
 
 @login_required	
@@ -367,11 +395,15 @@ def CadastrarArtigo(request):
 		try:
 			artigo = Artigo()
 			artigo.idUsuario = request.user
-			# artigo.idModelo = Modelo()
 			artigo.titulo = request.POST['titulo']
 			artigo.autor = request.POST['autor']
 			artigo.texto = request.POST['texto']
 			artigo.dataCadastro = timezone.now()
+
+			#modelo
+			modelo = request.POST['modelo']
+			artigo.idModelo = Modelo.objects.get(id=int(modelo))
+
 		except KeyError as a:
 			request.session['error_message'] = "Erro no cadastro"
 			return HttpResponseRedirect('/sabia/artigos')
@@ -392,10 +424,18 @@ def VerArtigo(request,get_id):
 @login_required	
 def EditarArtigoView(request,get_id):
 	artigo = Artigo.objects.get(id=int(get_id))
-	conteudo = 'sabia/artigo/alterar_artigo.html'
+	modelos = Modelo.objects.filter(idUsuario=request.user.id)
+
+	modelosAux = []
+	for modelo in modelos:
+	 	if modelo.id != artigo.idModelo.id:
+	 		modelosAux.append(modelo)
+
+	conteudo = 'sabia/artigo/alterar_artigo.html' 		
 	return render(request,'sabia/painel.html', 
 		{'activeArtigos': "active",
 		'conteudo': conteudo,
+		'modelos': modelosAux,
 		'artigo': artigo})
 
 @login_required	
@@ -406,6 +446,10 @@ def EditarArtigo(request,get_id):
 			artigo.titulo = request.POST['titulo']
 			artigo.autor = request.POST['autor']
 			artigo.texto = request.POST['texto']
+
+			#modelo
+			modelo = request.POST['modelo']
+			artigo.idModelo = Modelo.objects.get(id=int(modelo))
 		except KeyError as a:
 			request.session['error_message_alt'] = "Erro ao alterar artigo"
 			return HttpResponseRedirect('/sabia/artigos')
