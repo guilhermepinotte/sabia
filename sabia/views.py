@@ -127,10 +127,66 @@ def Fichamentos(request):
 
 @login_required	
 def NovoFichamento(request,get_id):	
+	artigo = Artigo.objects.get(id=int(get_id))
+	campos = Campo.objects.filter(idModelo=artigo.idModelo.id)
+
+	camposAux = []
+	for campo in campos:
+	 	camposAux.append(campo)
+
+	qtd = len(campos)
 	conteudo = 'sabia/fichamento/novo_fichamento.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
+		'artigo': artigo,
+		'campos': campos,
+		'qtd': len(camposAux),
 		'conteudo': conteudo})
+
+@login_required	
+def CadastrarFichamento(request,get_id):
+	if request.method == 'POST':
+		fichamento = Fichamento()
+		fichamento.idUsuario = request.user
+		fichamento.idArtigo = Artigo.objects.get(id=int(get_id))
+		fichamento.nome = request.POST['nome']
+		fichamento.dataCadastro = timezone.now()
+		fichamento.dataAlteracao = timezone.now()
+
+
+		# print(fichamento.idArtigo.idModelo.id)
+
+		campos = Campo.objects.filter(idModelo=fichamento.idArtigo.idModelo)
+		print(campos)
+
+		# quantidade = int(request.POST['qtdcampos'])		
+		for campo in campos:
+			resp = Resposta()
+			resp.idCampo = campo
+			resp.idFichamento = fichamento
+			resp.resposta = request.POST['campo-'+str(campo.id)]
+
+			print(resp.resposta)
+			# try:
+			# 	artigo = Artigo()
+			# 	artigo.idUsuario = request.user
+			# 	artigo.titulo = request.POST['titulo']
+			# 	artigo.autor = request.POST['autor']
+			# 	artigo.texto = request.POST['texto']
+			# 	artigo.dataCadastro = timezone.now()
+
+			# 	#modelo
+			# 	modelo = request.POST['modelo']
+			# 	artigo.idModelo = Modelo.objects.get(id=int(modelo))
+
+			# except KeyError as a:
+			# 	request.session['error_message'] = "Erro no cadastro do Fichamento"
+			# 	return HttpResponseRedirect('/sabia/fichamentos')
+			# else:
+			# 	artigo.save()
+			# 	request.session['success_message'] = "Fichamento cadastrado com sucesso!"
+			# 	return HttpResponseRedirect('/sabia/fichamentos')
+
 
 @login_required	
 def verFichamento(request,get_id):	
@@ -400,9 +456,8 @@ def CadastrarArtigo(request):
 			artigo.texto = request.POST['texto']
 			artigo.dataCadastro = timezone.now()
 
-			#modelo
-			modelo = request.POST['modelo']
-			artigo.idModelo = Modelo.objects.get(id=int(modelo))
+			#Modelo
+			artigo.idModelo = Modelo.objects.get(id=int(request.POST['modelo']))
 
 		except KeyError as a:
 			request.session['error_message'] = "Erro no cadastro"

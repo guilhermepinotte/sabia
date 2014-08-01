@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     #Fichamento
     url(r'^fichamentos/$', views.Fichamentos, name='fichamentos'),
     url(r'^fichamentos/(?P<get_id>\d+)/novo$', views.NovoFichamento, name='novofichamento'),
+    url(r'^fichamentos/(?P<get_id>\d+)/novo/new$', views.CadastrarFichamento, name='cadastrarFichamento'),
     url(r'^fichamentos/(?P<get_id>\d+)/ver', views.verFichamento, name='verfichamento'),
     url(r'^fichamentos/(?P<get_id>\d+)/edita$', views.editaFichamento, name='editafichamento'),
     
