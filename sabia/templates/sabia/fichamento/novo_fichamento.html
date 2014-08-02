@@ -19,7 +19,6 @@
     <hr>  
     <form role="form" action="/sabia/fichamentos/{{artigo.id}}/novo/new" method="POST">
       {% csrf_token %} 
-      <!-- <input type="hidden" id="qtdcampos" name="qtdcampos" value="{{qtd}}"> -->
   	  <div class="form-group">
   	    <label for="nome">Nome do Fichamento</label>
   	    <input type="text" class="form-control" id="nome" name="nome" placeholder="Título do artigo">

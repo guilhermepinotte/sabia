@@ -51,6 +51,9 @@ class Fichamento(models.Model):
     dataCadastro = models.DateTimeField('data de cadastro')
     dataAlteracao = models.DateTimeField('data de alteracao')
     
+    def __str__(self):
+        return self.nome
+
 class Avaliacao(models.Model):
     idFichamento = models.ForeignKey(Fichamento)
     idUsuario = models.ForeignKey(User)

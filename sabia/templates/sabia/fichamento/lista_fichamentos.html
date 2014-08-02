@@ -90,13 +90,13 @@
                     <a href="/sabia/fichamentos/{{fichamento.id}}/ver">{{fichamento.nome}}</a>
                   </td>
                   <td>
-                    <a href="/sabia/artigos/{{artigo.id}}/ver">{{fichamento.idArtigo.titulo}}</a>
+                    <a href="/sabia/artigos/{{fichamento.idArtigo.id}}/ver">{{fichamento.idArtigo.titulo}}</a>
                   </td>
                   <td>{{fichamento.idArtigo.autor}}</td>
                   <td>{{fichamento.dataCadastro}}</td>
                   <td>
                     <a role="button" href="/sabia/fichamentos/{{fichamento.id}}/ver" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Ver"><i class="fa fa-eye"></i></a>
-                    <a role="button" href="/sabia/fichamento/{{fichamento.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
+                    <a role="button" href="/sabia/fichamentos/{{fichamento.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
                     <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>

@@ -146,47 +146,40 @@ def NovoFichamento(request,get_id):
 @login_required	
 def CadastrarFichamento(request,get_id):
 	if request.method == 'POST':
-		fichamento = Fichamento()
-		fichamento.idUsuario = request.user
-		fichamento.idArtigo = Artigo.objects.get(id=int(get_id))
-		fichamento.nome = request.POST['nome']
-		fichamento.dataCadastro = timezone.now()
-		fichamento.dataAlteracao = timezone.now()
+		try:
+			fichamento = Fichamento()
+			fichamento.idUsuario = request.user
+			fichamento.idArtigo = Artigo.objects.get(id=int(get_id))
+			fichamento.nome = request.POST['nome']
+			fichamento.dataCadastro = timezone.now()
+			fichamento.dataAlteracao = timezone.now()
+			fichamento.save()
+			# print(fichamento.idArtigo.idModelo.id)
 
+			campos = Campo.objects.filter(idModelo=fichamento.idArtigo.idModelo)
 
-		# print(fichamento.idArtigo.idModelo.id)
+			# quantidade = int(request.POST['qtdcampos'])
+			for campo in campos:
+				try:
+					resp = Resposta()
+					resp.idCampo = campo
+					resp.idFichamento = fichamento
+					resp.resposta = request.POST['campo-'+str(campo.id)]
+				except KeyError as a:
+					request.session['error_message'] = "Erro no cadastro do Fichamento (Erro na Resposta)"
+					return HttpResponseRedirect('/sabia/fichamentos')
+				else:
+					resp.save()
+					request.session['success_message'] = "Fichamento cadastrado com sucesso!"
 
-		campos = Campo.objects.filter(idModelo=fichamento.idArtigo.idModelo)
-		print(campos)
+		except KeyError as a:
+			request.session['error_message'] = "Erro no cadastro do Fichamento"
+			return HttpResponseRedirect('/sabia/fichamentos')
+		else:
+			request.session['success_message'] = "Fichamento cadastrado com sucesso!"
+			return HttpResponseRedirect('/sabia/fichamentos')
 
-		# quantidade = int(request.POST['qtdcampos'])		
-		for campo in campos:
-			resp = Resposta()
-			resp.idCampo = campo
-			resp.idFichamento = fichamento
-			resp.resposta = request.POST['campo-'+str(campo.id)]
-
-			print(resp.resposta)
-			# try:
-			# 	artigo = Artigo()
-			# 	artigo.idUsuario = request.user
-			# 	artigo.titulo = request.POST['titulo']
-			# 	artigo.autor = request.POST['autor']
-			# 	artigo.texto = request.POST['texto']
-			# 	artigo.dataCadastro = timezone.now()
-
-			# 	#modelo
-			# 	modelo = request.POST['modelo']
-			# 	artigo.idModelo = Modelo.objects.get(id=int(modelo))
-
-			# except KeyError as a:
-			# 	request.session['error_message'] = "Erro no cadastro do Fichamento"
-			# 	return HttpResponseRedirect('/sabia/fichamentos')
-			# else:
-			# 	artigo.save()
-			# 	request.session['success_message'] = "Fichamento cadastrado com sucesso!"
-			# 	return HttpResponseRedirect('/sabia/fichamentos')
-
+			# print(resp.resposta)
 
 @login_required	
 def verFichamento(request,get_id):	
