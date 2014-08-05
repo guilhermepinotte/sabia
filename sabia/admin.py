@@ -2,15 +2,17 @@
 from django.contrib import admin
 
 from sabia.models import *
-'''    
+   
 class ArtigoAdmin(admin.ModelAdmin):
     fieldsets = [
-        (u'Proprietário', {'fields': ['idUsuario_id'], 'classes': ['collapse']}),
-        ( 'Artigo',       {'fields': ['titulo', 'autor', 'descricao'], 'classes': ['collapse']}),
-        ( 'Envio',        {'fields': ['dataCadastro'], 'classes': ['collapse']})
+        ('Proprietário',          {'fields': ['idUsuario']}),
+        ('Modelo',                {'fields': ['idModelo']}),
+        ('Dados do Artigo',       {'fields': ['titulo', 'autor', 'texto']}),
+        ('Data de Publicação',    {'fields': ['dataCadastro'], 'classes': ['collapse']})
     ]
-    list_display = ('id', 'titulo', 'autor', 'idUsuario_id', 'dataCadastro')
-
+    list_display = ('titulo','id', 'autor', 'idUsuario', 'dataCadastro')
+    list_filter = ['dataCadastro']
+'''
 class FichamentoAdmin(admin.ModelAdmin): 
     fieldsets = [
         (u'Proprietário', {'fields': ['idUsuario_id'], 'classes': ['collapse']}),
@@ -65,7 +67,7 @@ admin.site.register(Campo, CampoAdmin)
 admin.site.register(Resposta, RespostaAdmin)
 admin.site.register(Avaliacao, AvaliacaoAdmin)
 '''
-admin.site.register(Artigo)
+admin.site.register(Artigo,ArtigoAdmin)
 admin.site.register(Fichamento)
 admin.site.register(Modelo)
 admin.site.register(Campo)

@@ -36,8 +36,16 @@ body {
 	margin-bottom: 8px;
 }
 
+#btn-alterar-fichamento {
+	margin-bottom: 8px;
+}
+
 #nav-fichamento {
 	margin-bottom: 10px;
+}
+
+#btn-fazer-fichamento {
+	margin-left: 18px;
 }
 
 

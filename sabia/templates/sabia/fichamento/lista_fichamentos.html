@@ -55,90 +55,88 @@
 </div>  
 {% endif%}
    
-  <div class="row">
-    <div class="col-md-12">  
-      <h1>Fichamentos</h1>
-      <hr>
-      <!-- Nav tabs -->
-      <ul class="nav nav-pills" role="tablist" id="nav-fichamento">
-        <li class="active"><a href="#feitos" role="tab" data-toggle="tab">Feitos</a></li>
-        <li><a href="#fazer" role="tab" data-toggle="tab">À Fazer</a></li>
-      </ul>
-    </div>
+<div class="row">
+  <div class="col-md-12">  
+    <h1>Fichamentos</h1>
+    <hr>
+    <!-- Nav tabs -->
+    <ul class="nav nav-pills" role="tablist" id="nav-fichamento">
+      <li class="active"><a href="#feitos" role="tab" data-toggle="tab">Feitos</a></li>
+      <li><a href="#fazer" role="tab" data-toggle="tab">À Fazer</a></li>
+    </ul>
   </div>
+</div>
 
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <!-- FEITOS -->
-    <div class="tab-pane active" id="feitos">
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table table-hover table-bordered" id="table-fichamentos">
-            <thead>
+<!-- Tab panes -->
+<div class="tab-content">
+  <!-- FEITOS -->
+  <div class="tab-pane active" id="feitos">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-hover table-bordered" id="table-fichamentos">
+          <thead>
+            <tr>
+              <th>Nome do Fichamento</th>
+              <th>Título do Artigo</th>
+              <th>Autor</th>
+              <th style="width: 200px;">Data de Cadastro</th>
+              <th style="width: 75px;">Gerenciar</th>
+            </tr>
+          </thead>  
+          <tbody>
+            {% for fichamento in fichamentos %}
               <tr>
-                <th>Nome do Fichamento</th>
-                <th>Título do Artigo</th>
-                <th>Autor</th>
-                <th style="width: 200px;">Data de Cadastro</th>
-                <th style="width: 75px;">Gerenciar</th>
+                <td>
+                  <!-- <a href="/sabia/fichamentos/{{fichamento.id}}">{{fichamento.nome}}</a> -->
+                  <a href="{% url 'sabia:verfichamento' fichamento.id %}">{{fichamento.nome}}</a>
+                </td>
+                <td>
+                  <a href="/sabia/artigos/{{fichamento.idArtigo.id}}/ver">{{fichamento.idArtigo.titulo}}</a>
+                </td>
+                <td>{{fichamento.idArtigo.autor}}</td>
+                <td>{{fichamento.dataCadastro}}</td>
+                <td>
+                  <a role="button" href="/sabia/fichamentos/{{fichamento.id}}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Ver"><i class="fa fa-eye"></i></a>
+                  <a role="button" href="/sabia/fichamentos/{{fichamento.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
+                  <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
+                </td>
               </tr>
-            </thead>  
-            <tbody>
-              {% for fichamento in fichamentos %}
-                <tr>
-                  <td>
-                    <a href="/sabia/fichamentos/{{fichamento.id}}/ver">{{fichamento.nome}}</a>
-                  </td>
-                  <td>
-                    <a href="/sabia/artigos/{{fichamento.idArtigo.id}}/ver">{{fichamento.idArtigo.titulo}}</a>
-                  </td>
-                  <td>{{fichamento.idArtigo.autor}}</td>
-                  <td>{{fichamento.dataCadastro}}</td>
-                  <td>
-                    <a role="button" href="/sabia/fichamentos/{{fichamento.id}}/ver" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Ver"><i class="fa fa-eye"></i></a>
-                    <a role="button" href="/sabia/fichamentos/{{fichamento.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
-                    <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
-                  </td>
-                </tr>
-              {% endfor %}   
-            </tbody>
-          </table>
-        </div>  
-      </div>
-    </div>
-    <!-- À FAZER -->
-    <div class="tab-pane" id="fazer">
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table table-hover table-bordered" id="table-artigos">
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th style="width: 200px;">Data de Cadastro</th>
-                <th style="width: 75px;">Gerenciar</th>
-              </tr>
-            </thead>  
-            <tbody>
-              {% for artigo in artigos %}
-                <tr>
-                  <td>
-                    <a href="/sabia/artigos/{{artigo.id}}/ver">{{artigo.titulo}}</a>
-                  </td>
-                  <td>{{artigo.autor}}</td>
-                  <td>{{artigo.dataCadastro}}</td>
-                  <td>
-                    <a role="button" href="/sabia/fichamentos/{{artigo.id}}/novo" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Fazer fichamento"><i class="fa fa-file-text-o"></i></a>
-                    <a role="button" href="#" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></a>
-                  </td>
-                </tr>
-              {% endfor %}   
-            </tbody>
-          </table>
-        </div>  
+            {% endfor %}   
+          </tbody>
+        </table>
       </div>  
     </div>
   </div>
-
-    
-<!-- </div>
+  <!-- À FAZER -->
+  <div class="tab-pane" id="fazer">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-hover table-bordered" id="table-artigos">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Autor</th>
+              <th style="width: 200px;">Data de Cadastro</th>
+              <th style="width: 75px;">Gerenciar</th>
+            </tr>
+          </thead>  
+          <tbody>
+            {% for artigo in artigos %}
+              <tr>
+                <td>
+                  <a href="/sabia/artigos/{{artigo.id}}/ver">{{artigo.titulo}}</a>
+                </td>
+                <td>{{artigo.autor}}</td>
+                <td>{{artigo.dataCadastro}}</td>
+                <td>
+                  <a role="button" href="/sabia/fichamentos/{{artigo.id}}/novo" id="btn-fazer-fichamento" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Fazer fichamento"><i class="fa fa-file-text-o"></i>&nbspFichar</a>
+                  <!-- <a role="button" href="#" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></a> -->
+                </td>
+              </tr>
+            {% endfor %}   
+          </tbody>
+        </table>
+      </div>  
+    </div>  
+  </div>
+</div>

@@ -71,8 +71,8 @@ def CadastrarUsuario(request):
 @login_required		
 def Home(request):
 	conteudo = 'sabia/home/home.html'
-	artigos = Artigo.objects.filter(idUsuario=request.user.id)
-	modelos = Modelo.objects.filter(idUsuario=request.user.id)
+	artigos = Artigo.objects.filter(idUsuario=request.user.id).order_by('-dataCadastro')[:5]
+	modelos = Modelo.objects.filter(idUsuario=request.user.id).order_by('-dataCadastro')[:5]
 
 	return render(request,'sabia/painel.html', 
 		{'activeHome': "active",
@@ -179,24 +179,73 @@ def CadastrarFichamento(request,get_id):
 			request.session['success_message'] = "Fichamento cadastrado com sucesso!"
 			return HttpResponseRedirect('/sabia/fichamentos')
 
-			# print(resp.resposta)
-
 @login_required	
-def verFichamento(request,get_id):	
+def verFichamento(request,get_id):
+	fichamento = Fichamento.objects.get(id=int(get_id))
+	respostas = Resposta.objects.filter(idFichamento=fichamento)
+
 	conteudo = 'sabia/fichamento/ver_fichamento.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
 		'conteudo': conteudo,
-		'get_id':get_id})	
+		'fichamento': fichamento,
+		'respostas': respostas})
 
 @login_required	
-def editaFichamento(request,get_id):	
-	conteudo = 'sabia/fichamento/edita_fichamento.html'
+def editaFichamento(request,get_id):
+	fichamento = Fichamento.objects.get(id=int(get_id))
+	respostas = Resposta.objects.filter(idFichamento=fichamento)
 
+	conteudo = 'sabia/fichamento/edita_fichamento.html'
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
 		'conteudo': conteudo,
-		'get_id':get_id})
+		'fichamento': fichamento,
+		'respostas': respostas})
+
+@login_required	
+def editarFichamento(request,get_id):	
+	if request.method == 'POST':
+		try:
+			fichamento = Fichamento.objects.get(id=int(get_id))
+			fichamento.nome = request.POST['nome']
+			fichamento.dataAlteracao = timezone.now()
+
+			respostas = Resposta.objects.filter(idFichamento=fichamento)
+			for resposta in respostas:
+				try:
+					resposta.resposta = request.POST['campo-'+str(resposta.idCampo.id)]
+				except KeyError as a:
+					request.session['error_message_alt'] = "Erro ao editar Fichamento (Erro na Resposta)"
+					return HttpResponseRedirect('/sabia/fichamentos')
+				else:
+					resposta.save()
+					request.session['success_message_alt'] = "Fichamento alterado com sucesso!"
+
+		except KeyError as a:
+			request.session['error_message_alt'] = "Erro ao editar Fichamento"
+			return HttpResponseRedirect('/sabia/fichamentos')
+		else:
+			fichamento.save()
+			request.session['success_message_alt'] = "Fichamento alterado com sucesso!"
+			return HttpResponseRedirect('/sabia/fichamentos')	
+
+@login_required
+def excluirFichamento(request,get_id):
+	try:
+		fichamento = Fichamento.objects.get(id=int(get_id))
+		respostas = Resposta.objects.filter(idFichamento=fichamento)
+
+		for resposta in respostas:
+			resposta.delete()
+
+	except KeyError as a:
+			request.session['error_message_exc'] = "Erro ao excluir fichamento"
+			return HttpResponseRedirect('/sabia/fichamentos')
+	else:
+		fichamento.delete()
+		request.session['success_message_exc'] = "Fichamento excluído com sucesso!"
+		return HttpResponseRedirect('/sabia/fichamentos')
 	
 #### MODELOS
 @login_required	

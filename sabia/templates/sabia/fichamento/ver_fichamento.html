@@ -1,1 +1,53 @@
-<h1>Visualizar Fichamento <{{ get_id }}></h1>
+<div class="row">
+  <div class="col-md-12">
+    <h1>Ver Fichamento</h1>
+    <hr>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="col-sm-1 control-label">Título:</label>
+        <div class="col-sm-11">
+          <p class="form-control-static">{{fichamento.idArtigo.titulo}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-1 control-label">Autor:</label>
+        <div class="col-sm-11">
+          <p class="form-control-static">{{fichamento.idArtigo.autor}}</p>
+        </div>
+      </div>
+    </form>
+    <hr>
+    <div class="row" id="btn-alterar-fichamento">
+      <a class="btn btn-danger pull-right" id="espaco" data-toggle="modal" data-target="#myModal" href="#" role="button"><i class="fa fa-trash-o"></i>&nbspExcluir</a>      
+      <a class="btn btn-primary pull-right" href="{% url 'sabia:editafichamento' fichamento.id %}" role="button"><i class="fa fa-pencil"></i>&nbsp Alterar Artigo</a>
+    </div>
+    <div class="form-group">
+	    <label for="nome">Nome do Fichamento</label>
+	    <input type="text" class="form-control" id="nome" name="nome" value="{{fichamento.nome}}" disabled="true">
+	  </div>
+    {% for resposta in respostas %}
+      <div class="form-group">
+        <label for="campo-{{resposta.idCampo.id}}">{{resposta.idCampo.label}}</label>
+        <textarea class="form-control" name="campo-{{resposta.idCampo.id}}" rows="5" disabled>{{resposta.resposta}}</textarea>
+      </div>
+    {% endfor %}
+  </div>  
+</div> 
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Confirmar exclusão</h4>
+      </div>
+      <div class="modal-body">
+        <p>Deseja realmente excluir esse fichamento?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+        <a class="btn btn-primary" href="{% url 'sabia:excluirfichamento' fichamento.id %}" role="button">Excluir</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
