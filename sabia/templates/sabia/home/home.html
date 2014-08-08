@@ -1,24 +1,24 @@
 <div class="page-header">
-  <h1>Olá {{user.username}}! <small>Seja bem vindo ao Sabiá!&nbsp<i class="fa fa-smile-o"></i></small></h1>
+  <h1>Olá {{user.username}}!&nbsp<small>Seja bem vindo ao Sabiá!&nbsp<i class="fa fa-smile-o"></i></small></h1>
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       <h3>
-        <a href="{% url 'sabia:modelos' %}">Meus Modelo de Fichamento</a>
+        <a href="{% url 'sabia:fichamentos' %}">Meus Fichamentos</a>
       </h3>
       <ul class="list-unstyled">
-        {% if not modelos %}
-          <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i>&nbspVocê não possui modelos de fichamento cadastrados.</div>
+        {% if not fichamentos %}
+          <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i>&nbspVocê não possui fichamentos cadastrados.</div>
         {% else %}
-          {% for modelo in modelos %}
-            <li><a href="/fichamentos/modelos/{{modelo.id}}/ver"><i class="fa fa-chevron-right"></i>&nbsp{{modelo.nome}}</a></li>
+          {% for fichamento in fichamentos %}
+            <li><a href="{% url 'sabia:verfichamento' fichamento.id %}"><i class="fa fa-chevron-right"></i>&nbsp{{fichamento.nome}}</a></li>
           {% endfor %}
         {%endif%}    
       </ul>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <h3>
         <a href="{% url 'sabia:artigos' %}">Meus Artigos</a>
       </h3>
@@ -32,5 +32,19 @@
         {%endif%}    
       </ul>  
    </div>
+   <div class="col-md-4">
+      <h3>
+        <a href="{% url 'sabia:modelos' %}">Meus Modelo de Fichamento</a>
+      </h3>
+      <ul class="list-unstyled">
+        {% if not modelos %}
+          <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i>&nbspVocê não possui modelos de fichamento cadastrados.</div>
+        {% else %}
+          {% for modelo in modelos %}
+            <li><a href="/fichamentos/modelos/{{modelo.id}}/ver"><i class="fa fa-chevron-right"></i>&nbsp{{modelo.nome}}</a></li>
+          {% endfor %}
+        {%endif%}    
+      </ul>
+    </div>
   <hr>
 </div> <!-- /container -->

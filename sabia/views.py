@@ -73,12 +73,14 @@ def Home(request):
 	conteudo = 'sabia/home/home.html'
 	artigos = Artigo.objects.filter(idUsuario=request.user.id).order_by('-dataCadastro')[:5]
 	modelos = Modelo.objects.filter(idUsuario=request.user.id).order_by('-dataCadastro')[:5]
+	fichamentos = Fichamento.objects.filter(idUsuario=request.user.id).order_by('-dataCadastro')[:5]
 
 	return render(request,'sabia/painel.html', 
 		{'activeHome': "active",
 		'conteudo': conteudo,
 		'artigos': artigos,
-		'modelos': modelos})
+		'modelos': modelos,
+		'fichamentos': fichamentos})
 
 #
 #  F I C H A M E N T O
