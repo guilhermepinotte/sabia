@@ -70,7 +70,22 @@
       delay: { show: 500, hide: 100 }
     });
 
+    $('[title="Excluir"]').tooltip({
+      delay: { show: 500, hide: 100 }
+    });
+
     $(".alert").alert();
+
+    $(".fancybox").fancybox({
+      'width'           : '90%',
+      'height'          : '90%',
+      'autoScale'       : false,
+      'openEffect'      : 'fade',
+      'closeEffect'     : 'fade',
+      'type'            : 'iframe',
+      'overlayOpacity'  : 0.8,
+      'overlayColor'    : '#000000'  
+    });
 
   });
 })(jQuery)

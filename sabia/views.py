@@ -68,7 +68,7 @@ def CadastrarUsuario(request):
 #
 #  H O M E
 #
-@login_required		
+@login_required
 def Home(request):
 	conteudo = 'sabia/home/home.html'
 	artigos = Artigo.objects.filter(idUsuario=request.user.id).order_by('-dataCadastro')[:5]
@@ -85,7 +85,7 @@ def Home(request):
 #
 #  F I C H A M E N T O
 #
-@login_required	
+@login_required
 def Fichamentos(request):
 	error_message = False
 	success_message = False
@@ -114,7 +114,7 @@ def Fichamentos(request):
 
 	conteudo = 'sabia/fichamento/lista_fichamentos.html'
 	fichamentos = Fichamento.objects.filter(idUsuario=request.user.id)
-	artigos = Artigo.objects.filter(idUsuario=request.user.id)
+	artigos = Artigo.objects.filter(idUsuario=request.user.id,foiFichado=False)
 	return render(request,'sabia/painel.html',
 				{'activeFichamentos': "active",
 				'fichamentos': fichamentos,
@@ -127,7 +127,7 @@ def Fichamentos(request):
 				'success_msg_exc': success_message_exc,
 				'error_msg_exc': error_message_exc})
 
-@login_required	
+@login_required
 def NovoFichamento(request,get_id):	
 	artigo = Artigo.objects.get(id=int(get_id))
 	campos = Campo.objects.filter(idModelo=artigo.idModelo.id)
@@ -145,7 +145,7 @@ def NovoFichamento(request,get_id):
 		'qtd': len(camposAux),
 		'conteudo': conteudo})
 
-@login_required	
+@login_required
 def CadastrarFichamento(request,get_id):
 	if request.method == 'POST':
 		try:
@@ -156,11 +156,13 @@ def CadastrarFichamento(request,get_id):
 			fichamento.dataCadastro = timezone.now()
 			fichamento.dataAlteracao = timezone.now()
 			fichamento.save()
+			
+			# seta artigo como fichado
+			SetaArtigoComoFichado(fichamento.idArtigo)
+
 			# print(fichamento.idArtigo.idModelo.id)
 
 			campos = Campo.objects.filter(idModelo=fichamento.idArtigo.idModelo)
-
-			# quantidade = int(request.POST['qtdcampos'])
 			for campo in campos:
 				try:
 					resp = Resposta()
@@ -190,6 +192,16 @@ def verFichamento(request,get_id):
 	return render(request,'sabia/painel.html', 
 		{'activeFichamentos': "active",
 		'conteudo': conteudo,
+		'fichamento': fichamento,
+		'respostas': respostas})
+
+@login_required	
+def verFichamentoFancybox(request,get_id):
+	fichamento = Fichamento.objects.get(id=int(get_id))
+	respostas = Resposta.objects.filter(idFichamento=fichamento)
+	conteudo = 'sabia/fichamento/ver_fichamento_fancybox.html'
+	return render(request,'sabia/painel_fancybox.html', 
+		{'conteudo': conteudo,
 		'fichamento': fichamento,
 		'respostas': respostas})
 
@@ -237,6 +249,9 @@ def excluirFichamento(request,get_id):
 	try:
 		fichamento = Fichamento.objects.get(id=int(get_id))
 		respostas = Resposta.objects.filter(idFichamento=fichamento)
+
+		# seta artigo como não fichado
+		SetaArtigoComoNaoFichado(fichamento.idArtigo)
 
 		for resposta in respostas:
 			resposta.delete()
@@ -498,6 +513,7 @@ def CadastrarArtigo(request):
 			artigo.titulo = request.POST['titulo']
 			artigo.autor = request.POST['autor']
 			artigo.texto = request.POST['texto']
+			artigo.foiFichado = False
 			artigo.dataCadastro = timezone.now()
 
 			#Modelo
@@ -516,6 +532,14 @@ def VerArtigo(request,get_id):
 	artigo = Artigo.objects.get(id=int(get_id))
 	conteudo = 'sabia/artigo/ver_artigo.html'
 	return render(request,'sabia/painel.html', 
+		{'conteudo': conteudo,
+		'artigo': artigo})
+
+@login_required	
+def VerArtigoFancybox(request,get_id):
+	artigo = Artigo.objects.get(id=int(get_id))
+	conteudo = 'sabia/artigo/ver_artigo_fancybox.html'
+	return render(request,'sabia/painel_fancybox.html', 
 		{'activeArtigos': "active",
 		'conteudo': conteudo,
 		'artigo': artigo})
@@ -568,6 +592,30 @@ def ExcluirArtigo(request,get_id):
 		artigo.delete()
 		request.session['success_message_exc'] = "Artigo excluído com sucesso!"
 		return HttpResponseRedirect('/sabia/artigos')
+
+@login_required
+def ExcluirArtigoDatatable(request):
+	try:
+		print("OLAAAAAA")
+		idArtigo = request.POST['data-idArtigo']
+		print(idArtigo)
+		artigo = Artigo.objects.get(id=int(idArtigo))
+	except KeyError as a:
+			request.session['error_message_exc'] = "Erro ao excluir artigo"
+			return HttpResponseRedirect('/sabia/artigos')
+	else:
+		artigo.delete()
+		request.session['success_message_exc'] = "Artigo excluído com sucesso!"
+		return HttpResponseRedirect('/sabia/artigos')		
+
+def SetaArtigoComoFichado(artigo):
+	artigo.foiFichado = True
+	artigo.save()
+
+def SetaArtigoComoNaoFichado(artigo):
+	artigo.foiFichado = False
+	artigo.save()
+
 #
 #  A V A L I A C A O
 #
@@ -577,4 +625,3 @@ def Avaliacoes(request):
 	return render(request,'sabia/painel.html', 
 		{'activeAvaliacoes': "active",
 		'conteudo': conteudo})	
-

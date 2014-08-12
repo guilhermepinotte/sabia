@@ -27,7 +27,7 @@
           <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i>&nbspVocê não possui artigos cadastrados.</div>
         {% else %}  
           {% for artigo in artigos %}
-            <li><a href="/sabia/artigos/{{artigo.id}}/ver"><i class="fa fa-chevron-right"></i>&nbsp{{artigo.titulo}}</a></li>
+            <li><a href="{% url 'sabia:verartigo' artigo.id %}"><i class="fa fa-chevron-right"></i>&nbsp{{artigo.titulo}}</a></li>
           {% endfor %}
         {%endif%}    
       </ul>  

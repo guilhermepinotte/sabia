@@ -30,6 +30,7 @@ class Artigo(models.Model):
     titulo = models.CharField(max_length=255)
     autor = models.CharField(max_length=255)
     texto = models.TextField()
+    foiFichado = models.BooleanField(default = False)
     dataCadastro = models.DateTimeField('data de cadastro')
      
     def __str__(self):

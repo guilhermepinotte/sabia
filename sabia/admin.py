@@ -8,9 +8,10 @@ class ArtigoAdmin(admin.ModelAdmin):
         ('Proprietário',          {'fields': ['idUsuario']}),
         ('Modelo',                {'fields': ['idModelo']}),
         ('Dados do Artigo',       {'fields': ['titulo', 'autor', 'texto']}),
+        ('Foi Fichado?',          {'fields': ['foiFichado']}),
         ('Data de Publicação',    {'fields': ['dataCadastro'], 'classes': ['collapse']})
     ]
-    list_display = ('titulo','id', 'autor', 'idUsuario', 'dataCadastro')
+    list_display = ('titulo','id', 'autor', 'idUsuario', 'foiFichado', 'dataCadastro')
     list_filter = ['dataCadastro']
 '''
 class FichamentoAdmin(admin.ModelAdmin): 

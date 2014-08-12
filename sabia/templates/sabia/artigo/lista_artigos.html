@@ -54,7 +54,6 @@
 </div>
 {% endif%}
 
-
   <div class="row" id="btn-inserir-artigo">
     <h1>Artigos</h1> 
     <hr>
@@ -74,14 +73,14 @@
         {% for artigo in artigos %}
       	  <tr>
       	  	<td>
-              <a href="/sabia/artigos/{{artigo.id}}/ver">{{artigo.titulo}}</a>
+              <a href="{% url 'sabia:verartigo' artigo.id %}">{{artigo.titulo}}</a>
             </td>
       	  	<td>{{artigo.autor}}</td>
             <td>{{artigo.dataCadastro}}</td>
             <td>
-              <a role="button" href="#" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-download"></i></a>
+              <a role="button" href="{% url 'sabia:verartigofancybox' artigo.id %}" class="btn btn-default btn-xs fancybox" data-toggle="tooltip" data-placement="top" title="Ver Artigo"><i class="fa fa-eye"></i></a>
               <a role="button" href="/sabia/artigos/{{artigo.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
-              <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
+              <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="modal" data-target="#myModal" data-placement="top" title="Excluir" data-idArtigo="{{artigo.id}}"><i class="fa fa-trash-o"></i></a>
             </td>
       	  </tr>
         {% endfor %}   
@@ -89,3 +88,21 @@
   	</table>
   </div>
 <!-- </div> -->
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Deseja realmente excluir?</h4>
+      </div>
+      <div class="modal-body">
+        <p><i class="fa fa-exclamation-triangle"></i>&nbspEste item será excluído permanentemente e não poderá ser recuperado.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
+        <a class="btn btn-primary" href="{% url 'sabia:excluirartigodatatable' %}" role="button">Excluir</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

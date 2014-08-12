@@ -21,7 +21,7 @@
       {% csrf_token %} 
   	  <div class="form-group">
   	    <label for="nome">Nome do Fichamento</label>
-  	    <input type="text" class="form-control" id="nome" name="nome" placeholder="Título do artigo">
+  	    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do Fichamento" required>
   	  </div>
       {% for campo in campos %}
         <div class="form-group">

@@ -87,16 +87,15 @@
             {% for fichamento in fichamentos %}
               <tr>
                 <td>
-                  <!-- <a href="/sabia/fichamentos/{{fichamento.id}}">{{fichamento.nome}}</a> -->
                   <a href="{% url 'sabia:verfichamento' fichamento.id %}">{{fichamento.nome}}</a>
                 </td>
                 <td>
-                  <a href="/sabia/artigos/{{fichamento.idArtigo.id}}/ver">{{fichamento.idArtigo.titulo}}</a>
+                  <a href="{% url 'sabia:verartigofancybox' fichamento.idArtigo.id %}" class="fancybox">{{fichamento.idArtigo.titulo}}</a>
                 </td>
                 <td>{{fichamento.idArtigo.autor}}</td>
                 <td>{{fichamento.dataCadastro}}</td>
                 <td>
-                  <a role="button" href="/sabia/fichamentos/{{fichamento.id}}" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Ver"><i class="fa fa-eye"></i></a>
+                  <a role="button" href="{% url 'sabia:verfichamentofancybox' fichamento.id %}" class="btn btn-default btn-xs fancybox" data-toggle="tooltip" data-placement="top" title="Ver"><i class="fa fa-eye"></i></a>
                   <a role="button" href="/sabia/fichamentos/{{fichamento.id}}/edita" class="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="Alterar"><i class="fa fa-pencil"></i></a>
                   <a role="button" href="#" class="btn btn-default btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash-o"></i></a>
                 </td>
@@ -124,7 +123,7 @@
             {% for artigo in artigos %}
               <tr>
                 <td>
-                  <a href="/sabia/artigos/{{artigo.id}}/ver">{{artigo.titulo}}</a>
+                  <a href="{% url 'sabia:verartigofancybox' artigo.id %}" class="fancybox">{{artigo.titulo}}</a>
                 </td>
                 <td>{{artigo.autor}}</td>
                 <td>{{artigo.dataCadastro}}</td>
