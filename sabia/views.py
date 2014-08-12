@@ -42,8 +42,8 @@ def CadastrarUsuario(request):
 			usuario = User()
 			usuario.email = request.POST['email']
 			usuario.set_password(request.POST['senha'])
-			usuario.name = request.POST['nome']
-			usuario.username = request.POST['nome']
+			usuario.first_name = request.POST['nome']
+			usuario.username = request.POST['username']
 			usuario.tipo = request.POST['tipo']
 			usuario.dataCadastro = timezone.now()
 			
@@ -432,25 +432,30 @@ def verModelo(request,get_id):
 		'get_id':get_id})	
 
 def CadastrarModeloDefault(usuario):
-	modelo = Modelo()
-	modelo.idUsuario = usuario
-	modelo.nome = 'Default'
-	modelo.descricao = 'Modelo Default de Fichamento'
-	modelo.dataCadastro = timezone.now()
-	modelo.save()
-			
-	#Campos
-	campo1 = Campo()
-	campo1.idModelo = modelo
-	campo1.label     = 'Pontos Positivos'
-	campo1.descricao = 'Aqui você deve descrever os pontos positivos encontrados na leitura do artigo'
-	campo1.save()
-
-	campo2 = Campo()
-	campo2.idModelo = modelo
-	campo2.label     = 'Pontos Negativos'
-	campo2.descricao = 'Aqui você deve descrever os pontos negativos encontrados na leitura do artigo'
-	campo2.save()
+	
+	meus_modelos = Modelo.objects.filter(deletado = False)
+	if ( len(meus_modelos)==0 ):	
+		modelo = Modelo()
+		modelo.idUsuario = usuario
+		modelo.nome = 'Default'
+		modelo.descricao = 'Modelo Default de Fichamento'
+		modelo.dataCadastro = timezone.now()
+		modelo.save()
+				
+		#Campos
+		campo1 = Campo()
+		campo1.idModelo = modelo
+		campo1.label     = 'Pontos Positivos'
+		campo1.descricao = 'Aqui você deve descrever os pontos positivos encontrados na leitura do artigo'
+		campo1.save()
+	
+		campo2 = Campo()
+		campo2.idModelo = modelo
+		campo2.label     = 'Pontos Negativos'
+		campo2.descricao = 'Aqui você deve descrever os pontos negativos encontrados na leitura do artigo'
+		campo2.save()
+	else:
+		return True
 
 #
 #  A R T I G O S
